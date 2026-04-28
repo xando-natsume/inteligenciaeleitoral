@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veltro.IA — Inteligência Eleitoral MS 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0d1b2e;--muted:#64748b;--cream:#f4efe6;--cream2:#ede7da;
+  --navy:#0a1628;--navy2:#1a3a6e;--blue:#2563eb;
+  --riedel:#1d5fa8;--trad:#b91c1c;--catan:#c2570d;
+  --green:#16a34a;--yellow:#ca8a04;--red:#dc2626;
+  --s:0 2px 12px rgba(0,0,0,.08);--sr:0 4px 24px rgba(0,0,0,.14);
+}
+html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);color:var(--ink);overflow:hidden}
+
+/* ── SCREENS ── */
+.screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;transition:opacity .5s,transform .5s;z-index:10}
+.screen.hidden{opacity:0;pointer-events:none;transform:scale(.97)}
+
+/* ── LOGIN ── */
+#login{background:linear-gradient(135deg,#050c1a 0%,#0a1f3d 50%,#050c1a 100%)}
+#login::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(37,99,235,.12),transparent 55%),radial-gradient(ellipse at 70% 60%,rgba(29,95,168,.08),transparent 50%);pointer-events:none}
+.login-card{position:relative;width:420px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:48px 40px;backdrop-filter:blur(20px);box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.login-logo{display:flex;align-items:center;gap:14px;margin-bottom:36px}
+.logo-mark{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#1d5fa8,#2563eb);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;letter-spacing:-1px;box-shadow:0 8px 24px rgba(37,99,235,.4)}
+.logo-text h1{font-size:20px;font-weight:800;color:#fff;letter-spacing:.5px}
+.logo-text p{font-size:11px;color:rgba(255,255,255,.45);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+.login-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);border-radius:999px;font-size:11px;color:rgba(255,255,255,.7);letter-spacing:1px;text-transform:uppercase;margin-bottom:32px}
+.login-badge span{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:blink 2s infinite}
+.login-field{margin-bottom:16px}
+.login-field label{display:block;font-size:11px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.login-field input{width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:#fff;font-size:14px;font-family:inherit;outline:none;transition:.2s}
+.login-field input:focus{border-color:rgba(37,99,235,.6);background:rgba(37,99,235,.08)}
+.login-field input::placeholder{color:rgba(255,255,255,.25)}
+.btn-login{width:100%;margin-top:8px;padding:15px;background:linear-gradient(135deg,#1d5fa8,#2563eb);border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:700;letter-spacing:.5px;cursor:pointer;transition:.2s;box-shadow:0 8px 24px rgba(37,99,235,.35)}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 12px 32px rgba(37,99,235,.45)}
+.login-note{text-align:center;margin-top:24px;font-size:11px;color:rgba(255,255,255,.25);letter-spacing:.5px}
+
+/* ── CANDIDATE SELECTION ── */
+#candidates{background:var(--cream);flex-direction:column}
+.cand-header{text-align:center;margin-bottom:48px}
+.cand-header .eyebrow{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
+.cand-header h2{font-size:32px;font-weight:800;color:var(--ink);line-height:1.2}
+.cand-header p{font-size:14px;color:var(--muted);margin-top:8px}
+.cand-grid{display:flex;gap:24px}
+.cand-card{position:relative;width:280px;background:#fff;border:2px solid transparent;border-radius:24px;padding:32px 24px;cursor:pointer;transition:.3s;box-shadow:var(--s);overflow:hidden}
+.cand-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.cand-card.riedel::before{background:var(--riedel)}
+.cand-card.trad::before{background:var(--trad)}
+.cand-card.catan::before{background:var(--catan)}
+.cand-card:hover{transform:translateY(-4px);box-shadow:var(--sr)}
+.cand-card.selected{border-color:var(--riedel);box-shadow:0 0 0 4px rgba(29,95,168,.15),var(--sr)}
+.cand-photo{width:110px;height:110px;border-radius:50%;object-fit:cover;object-position:top;display:block;margin:0 auto 20px;border:3px solid var(--cream2)}
+.cand-card.selected .cand-photo{border-color:var(--riedel)}
+.cand-party{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-bottom:6px}
+.cand-card.riedel .cand-party{color:var(--riedel)}
+.cand-card.trad .cand-party{color:var(--trad)}
+.cand-card.catan .cand-party{color:var(--catan)}
+.cand-name{font-size:17px;font-weight:800;text-align:center;margin-bottom:4px}
+.cand-role{font-size:12px;color:var(--muted);text-align:center;margin-bottom:16px}
+.cand-archetype{font-size:11px;font-weight:600;padding:6px 12px;border-radius:999px;text-align:center;background:var(--cream);color:var(--muted)}
+.cand-card.selected .cand-archetype{background:rgba(29,95,168,.08);color:var(--riedel)}
+.cand-selected-badge{display:none;position:absolute;top:12px;right:12px;width:28px;height:28px;background:var(--riedel);border-radius:50%;align-items:center;justify-content:center;color:#fff;font-size:14px}
+.cand-card.selected .cand-selected-badge{display:flex}
+.btn-start{margin-top:40px;padding:16px 48px;background:var(--riedel);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px rgba(29,95,168,.35);transition:.2s;opacity:0;transform:translateY(10px);pointer-events:none}
+.btn-start.visible{opacity:1;transform:none;pointer-events:auto}
+.btn-start:hover{background:#1a4f94;transform:translateY(-2px)}
+.system-note{margin-top:16px;font-size:11px;color:var(--muted)}
+
+/* ── APP SHELL ── */
+#app{position:fixed;inset:0;display:flex;opacity:0;pointer-events:none;transition:opacity .5s;z-index:5}
+#app.visible{opacity:1;pointer-events:auto}
+#sidebar{width:240px;min-width:240px;background:var(--navy);display:flex;flex-direction:column;padding:20px 16px;gap:4px}
+.sb-logo{display:flex;align-items:center;gap:12px;padding:8px 10px 20px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:8px}
+.sb-logo-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1d5fa8,#2563eb);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff}
+.sb-logo-text{font-size:15px;font-weight:800;color:#fff}
+.sb-logo-text small{display:block;font-size:9px;font-weight:400;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase}
+.sb-section{font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.25);text-transform:uppercase;padding:16px 10px 6px}
+.sb-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;cursor:pointer;transition:.2s;color:rgba(255,255,255,.55);font-size:13px;font-weight:500;border:none;background:none;width:100%;text-align:left}
+.sb-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85)}
+.sb-item.active{background:rgba(37,99,235,.2);color:#93b4ff}
+.sb-item .sb-icon{font-size:15px;width:20px;text-align:center}
+.sb-item .sb-num{margin-left:auto;font-size:10px;background:rgba(255,255,255,.08);padding:2px 7px;border-radius:999px}
+.sb-footer{margin-top:auto;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)}
+.sb-footer-label{font-size:9px;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.25);text-transform:uppercase;margin-bottom:10px;padding:0 4px}
+.api-chip{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.04);margin-bottom:4px;font-size:11px;color:rgba(255,255,255,.5)}
+.api-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0}
+.api-chip span{margin-left:auto;font-size:9px;color:rgba(255,255,255,.3)}
+
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--cream)}
+#topbar{display:flex;align-items:center;gap:16px;padding:14px 24px;background:rgba(255,255,255,.8);border-bottom:1px solid rgba(0,0,0,.06);backdrop-filter:blur(10px)}
+.tb-candidate{display:flex;align-items:center;gap:10px}
+.tb-photo{width:32px;height:32px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--riedel)}
+.tb-name{font-size:13px;font-weight:700;color:var(--ink)}
+.tb-party{font-size:11px;color:var(--muted)}
+.tb-divider{width:1px;height:20px;background:rgba(0,0,0,.1)}
+.tb-breadcrumb{font-size:12px;color:var(--muted)}
+.tb-breadcrumb b{color:var(--ink)}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:12px}
+.tb-live{display:flex;align-items:center;gap:6px;font-size:11px;color:#16a34a;font-weight:600}
+.tb-live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:blink 2s infinite}
+.tb-date{font-size:11px;color:var(--muted)}
+
+#content{flex:1;overflow-y:auto;padding:28px}
+.sec{display:none}
+.sec.active{display:block}
+
+/* ── SECTION HEADER ── */
+.sec-title{font-size:22px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.sec-sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+.sec-next{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;margin-top:24px}
+.sec-next:hover{background:var(--navy2);transform:translateX(2px)}
+
+/* ── DOSSIE ── */
+.dossie-grid{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:20px}
+.panel{background:#fff;border-radius:18px;padding:24px;box-shadow:var(--s)}
+.candidate-profile{display:flex;flex-direction:column;align-items:center;text-align:center}
+.profile-photo{width:100px;height:100px;border-radius:50%;object-fit:cover;object-position:top;border:4px solid var(--riedel);margin-bottom:16px;box-shadow:0 8px 24px rgba(29,95,168,.25)}
+.profile-name{font-size:18px;font-weight:800;margin-bottom:2px}
+.profile-party{font-size:11px;font-weight:700;color:var(--riedel);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.profile-role{font-size:12px;color:var(--muted);margin-bottom:16px}
+.profile-archetype{font-size:12px;font-weight:600;padding:6px 14px;background:rgba(29,95,168,.08);color:var(--riedel);border-radius:999px;margin-bottom:20px}
+.stat-row{width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--cream2)}
+.stat-row:last-child{border-bottom:none}
+.stat-label{font-size:11px;color:var(--muted);font-weight:500}
+.stat-value{font-size:14px;font-weight:700;color:var(--ink)}
+.stat-bar{width:100%;height:6px;background:var(--cream2);border-radius:999px;margin-top:4px;overflow:hidden}
+.stat-bar-fill{height:100%;border-radius:999px;background:var(--riedel)}
+
+/* MS MAP */
+.map-container{position:relative}
+.map-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.map-sub{font-size:11px;color:var(--muted);margin-bottom:16px}
+.ms-map-svg{width:100%;max-height:280px}
+.city-dot{cursor:pointer;transition:.2s}
+.city-dot:hover circle{r:10}
+.city-tooltip{position:absolute;background:var(--navy);color:#fff;font-size:11px;padding:6px 10px;border-radius:8px;pointer-events:none;display:none;white-space:nowrap;box-shadow:var(--sr)}
+.map-legend{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+
+/* BOLHAS RADAR */
+.bolhas-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.bolhas-sub{font-size:11px;color:var(--muted);margin-bottom:12px}
+.bolha-legend{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.bl-item{display:flex;align-items:center;gap:8px;font-size:11px}
+.bl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* COMPETITORS MINI */
+.competitors-strip{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.comp-mini{background:#fff;border-radius:14px;padding:16px;box-shadow:var(--s);display:flex;align-items:center;gap:14px;border-left:4px solid}
+.comp-mini.trad{border-color:var(--trad)}
+.comp-mini.catan{border-color:var(--catan)}
+.comp-mini img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top}
+.comp-mini-info h4{font-size:13px;font-weight:700;margin-bottom:2px}
+.comp-mini-info p{font-size:11px;color:var(--muted)}
+.comp-mini-stat{margin-left:auto;text-align:right}
+.comp-mini-stat strong{display:block;font-size:16px;font-weight:800}
+.comp-mini-stat span{font-size:10px;color:var(--muted)}
+
+/* ── CONFRONTO ── */
+.confronto-table{width:100%;border-collapse:collapse;background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--s);font-size:12px}
+.confronto-table th{padding:12px 10px;background:var(--navy);color:rgba(255,255,255,.7);font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-align:center}
+.confronto-table th:first-child{text-align:left;padding-left:16px}
+.confronto-table td{padding:14px 10px;text-align:center;border-bottom:1px solid var(--cream2)}
+.confronto-table td:first-child{text-align:left;padding-left:16px}
+.confronto-table tr:last-child td{border-bottom:none}
+.confronto-table tr:nth-child(1) td:first-child{color:var(--riedel);font-weight:800}
+.confronto-table tr:nth-child(2) td:first-child{color:var(--trad);font-weight:800}
+.confronto-table tr:nth-child(3) td:first-child{color:var(--catan);font-weight:800}
+.ic{font-size:16px}
+.cand-cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}
+.cand-detail{background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--s)}
+.cand-detail-header{padding:20px;display:flex;align-items:center;gap:16px;border-bottom:4px solid}
+.cand-detail-header.riedel{border-color:var(--riedel);background:rgba(29,95,168,.04)}
+.cand-detail-header.trad{border-color:var(--trad);background:rgba(185,28,28,.04)}
+.cand-detail-header.catan{border-color:var(--catan);background:rgba(194,87,13,.04)}
+.cand-detail-header img{width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:top}
+.cand-detail-header h3{font-size:15px;font-weight:800;margin-bottom:2px}
+.cand-detail-header p{font-size:11px;color:var(--muted)}
+.cand-detail-body{padding:16px}
+.analysis-block{padding:10px 12px;border-radius:10px;margin-bottom:8px}
+.analysis-block.forte{background:rgba(22,163,74,.08);border-left:3px solid var(--green)}
+.analysis-block.batalha{background:rgba(202,138,4,.08);border-left:3px solid var(--yellow)}
+.analysis-block.muro{background:rgba(220,38,38,.08);border-left:3px solid var(--red)}
+.analysis-block h5{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.analysis-block.forte h5{color:var(--green)}
+.analysis-block.batalha h5{color:var(--yellow)}
+.analysis-block.muro h5{color:var(--red)}
+.analysis-block p{font-size:11px;color:var(--muted);line-height:1.5}
+
+/* ── MONITORING ── */
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:#fff;padding:4px;border-radius:12px;display:inline-flex;box-shadow:var(--s)}
+.tab{padding:9px 20px;border-radius:9px;border:none;background:none;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;transition:.2s;font-family:inherit}
+.tab.active{background:var(--navy);color:#fff;box-shadow:0 4px 12px rgba(10,22,40,.3)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+.monitoring-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:20px}
+.trending-list{background:#fff;border-radius:16px;padding:20px;box-shadow:var(--s)}
+.trending-list h4{font-size:13px;font-weight:700;margin-bottom:16px}
+.trend-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--cream2)}
+.trend-item:last-child{border-bottom:none}
+.trend-num{font-size:11px;font-weight:700;color:var(--muted);width:16px}
+.trend-hash{font-size:13px;font-weight:700;flex:1}
+.trend-vol{font-size:11px;color:var(--muted)}
+.trend-badge{font-size:10px;padding:3px 8px;border-radius:999px;font-weight:600}
+.trend-badge.up{background:rgba(22,163,74,.1);color:var(--green)}
+.tweets-panel{background:#fff;border-radius:16px;padding:20px;box-shadow:var(--s)}
+.tweets-panel h4{font-size:13px;font-weight:700;margin-bottom:16px}
+.tweet-item{padding:12px 0;border-bottom:1px solid var(--cream2)}
+.tweet-item:last-child{border-bottom:none}
+.tweet-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.tweet-avatar{width:28px;height:28px;border-radius:50%;background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.tweet-user{font-size:12px;font-weight:700}
+.tweet-handle{font-size:11px;color:var(--muted)}
+.tweet-time{font-size:10px;color:var(--muted);margin-left:auto}
+.tweet-text{font-size:12px;line-height:1.5;color:var(--ink)}
+.tweet-sent{display:inline-block;margin-top:6px;font-size:10px;padding:2px 8px;border-radius:999px;font-weight:600}
+.tweet-sent.pos{background:rgba(22,163,74,.1);color:var(--green)}
+.tweet-sent.neg{background:rgba(220,38,38,.1);color:var(--red)}
+.tweet-sent.neu{background:rgba(100,116,139,.1);color:var(--muted)}
+
+/* WHATSAPP */
+.wa-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.wa-stat{background:#fff;border-radius:14px;padding:16px;box-shadow:var(--s);text-align:center}
+.wa-stat-num{font-size:24px;font-weight:800;color:var(--ink)}
+.wa-stat-label{font-size:11px;color:var(--muted);margin-top:4px}
+.wa-groups{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wa-group{background:#fff;border-radius:14px;padding:16px;box-shadow:var(--s)}
+.wa-group-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.wa-sent-badge{padding:4px 10px;border-radius:999px;font-size:10px;font-weight:700}
+.wa-sent-badge.pos{background:rgba(22,163,74,.12);color:var(--green)}
+.wa-sent-badge.neg{background:rgba(220,38,38,.12);color:var(--red)}
+.wa-sent-badge.mix{background:rgba(202,138,4,.12);color:var(--yellow)}
+.wa-group h5{font-size:12px;font-weight:700;flex:1}
+.wa-topics{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.wa-topic{font-size:10px;padding:3px 8px;background:var(--cream);color:var(--muted);border-radius:999px}
+.wa-last{font-size:11px;color:var(--muted);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--cream2)}
+
+/* NOTICIAS */
+.news-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.news-item{background:#fff;border-radius:14px;padding:20px;box-shadow:var(--s)}
+.news-source{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.news-title{font-size:14px;font-weight:700;line-height:1.4;margin-bottom:8px}
+.news-preview{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.news-footer{display:flex;align-items:center;justify-content:space-between}
+.news-date{font-size:10px;color:var(--muted)}
+.news-tag{font-size:10px;padding:3px 8px;border-radius:999px;font-weight:600}
+.news-tag.pos{background:rgba(22,163,74,.1);color:var(--green)}
+.news-tag.neg{background:rgba(220,38,38,.1);color:var(--red)}
+.news-tag.neu{background:rgba(100,116,139,.1);color:var(--muted)}
+
+/* ── ALERTAS ── */
+.alertas-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.alerta-card{background:#fff;border-radius:16px;padding:20px;box-shadow:var(--s);border-left:4px solid}
+.alerta-card.oportunidade{border-color:#16a34a}
+.alerta-card.risco{border-color:#dc2626}
+.alerta-card.tendencia{border-color:#2563eb}
+.alerta-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.alerta-icon{font-size:20px}
+.alerta-type{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.alerta-card.oportunidade .alerta-type{color:#16a34a}
+.alerta-card.risco .alerta-type{color:#dc2626}
+.alerta-card.tendencia .alerta-type{color:#2563eb}
+.alerta-title{font-size:14px;font-weight:700;margin-bottom:6px}
+.alerta-text{font-size:12px;color:var(--muted);line-height:1.5}
+.alerta-bolha{display:inline-flex;align-items:center;gap:6px;margin-top:10px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--cream)}
+
+/* ── CONTEÚDO ── */
+.content-layout{display:grid;grid-template-columns:220px 1fr 220px;gap:20px}
+.bolhas-selector h4{font-size:13px;font-weight:700;margin-bottom:12px;color:var(--ink)}
+.bolha-btn{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border:1px solid var(--cream2);border-radius:10px;background:#fff;cursor:pointer;margin-bottom:6px;transition:.2s;font-family:inherit;text-align:left}
+.bolha-btn:hover{border-color:#cbd5e1;background:var(--cream)}
+.bolha-btn.active{border-color:var(--riedel);background:rgba(29,95,168,.06)}
+.bolha-btn-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.bolha-btn-info{flex:1}
+.bolha-btn-name{font-size:12px;font-weight:700;display:block}
+.bolha-btn-pct{font-size:10px;color:var(--muted)}
+.bolha-btn-status{font-size:9px;padding:2px 6px;border-radius:999px;font-weight:600;flex-shrink:0}
+.status-forte{background:rgba(29,95,168,.1);color:var(--riedel)}
+.status-batalha{background:rgba(202,138,4,.1);color:#92400e}
+.status-muro{background:rgba(220,38,38,.08);color:var(--red)}
+
+.content-panel h4{font-size:13px;font-weight:700;margin-bottom:16px}
+.content-block{background:#fff;border-radius:14px;padding:18px;box-shadow:var(--s);margin-bottom:12px}
+.content-block-label{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.content-block-label span{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.content-block-icon{font-size:16px}
+.content-text{font-size:13px;line-height:1.6;color:var(--ink)}
+.content-actions{display:flex;gap:8px;margin-top:12px}
+.content-action{padding:7px 14px;border-radius:8px;border:1px solid var(--cream2);background:#fff;font-size:11px;font-weight:600;cursor:pointer;transition:.2s;font-family:inherit;color:var(--muted)}
+.content-action:hover{border-color:var(--riedel);color:var(--riedel);background:rgba(29,95,168,.04)}
+
+.api-panel h4{font-size:13px;font-weight:700;margin-bottom:12px}
+.api-card{background:#fff;border-radius:12px;padding:14px;box-shadow:var(--s);margin-bottom:8px}
+.api-card-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.api-dot-live{width:8px;height:8px;border-radius:50%;background:#22c55e;animation:blink 2s infinite}
+.api-card-name{font-size:12px;font-weight:700}
+.api-card-use{font-size:10px;color:var(--muted);margin-bottom:10px}
+.btn-api{width:100%;padding:9px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;transition:.2s;font-family:inherit;letter-spacing:.5px}
+.btn-api:hover{background:var(--navy2)}
+.btn-api.generating{background:var(--riedel);animation:pulse-btn 1s infinite}
+
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes pulse-btn{0%,100%{opacity:1}50%{opacity:.7}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fade-in{animation:fadeIn .4s ease both}
+
+/* scrollbar */
+#content::-webkit-scrollbar{width:6px}
+#content::-webkit-scrollbar-track{background:transparent}
+#content::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12);border-radius:999px}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ LOGIN ══════════════ -->
+<div class="screen" id="login">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="logo-mark">V</div>
+      <div class="logo-text">
+        <h1>Veltro.IA</h1>
+        <small>Inteligência Eleitoral Operacional</small>
+      </div>
+    </div>
+    <div class="login-badge"><span></span>MS 2026 — Acesso Restrito</div>
+    <div class="login-field">
+      <label>E-mail</label>
+      <input type="email" id="login-email" placeholder="seu@email.com" value="governador@ms.gov.br">
+    </div>
+    <div class="login-field">
+      <label>Senha</label>
+      <input type="password" id="login-pass" placeholder="••••••••" value="ms2026">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Acessar Sistema →</button>
+    <p class="login-note">CONFIDENCIAL — USO EXCLUSIVO DA EQUIPE</p>
+  </div>
+</div>
+
+<!-- ══════════════ CANDIDATOS ══════════════ -->
+<div class="screen hidden" id="candidates">
+  <div>
+    <div class="cand-header">
+      <div class="eyebrow">Veltro.IA · MS 2026</div>
+      <h2>Selecione o candidato para análise completa</h2>
+      <p>608 candidatos cadastrados · Foco: Mato Grosso do Sul</p>
+    </div>
+    <div class="cand-grid">
+      <div class="cand-card riedel" onclick="selectCandidate(this)" id="card-riedel">
+        <div class="cand-selected-badge">✓</div>
+        <img class="cand-photo" src="ALX2160_ok_TRAT.jpg" alt="Riedel">
+        <div class="cand-party">PP</div>
+        <div class="cand-name">Eduardo Riedel</div>
+        <div class="cand-role">Governador de MS</div>
+        <div class="cand-archetype">O Gestor Moderado</div>
+      </div>
+      <div class="cand-card trad" onclick="selectCandidate(this)" id="card-trad">
+        <div class="cand-selected-badge">✓</div>
+        <img class="cand-photo" src="160587.jpgmaior.jpg" alt="Trad">
+        <div class="cand-party">PT</div>
+        <div class="cand-name">Fábio Trad</div>
+        <div class="cand-role">Deputado Federal MS</div>
+        <div class="cand-archetype">O Comunicador de Esquerda</div>
+      </div>
+      <div class="cand-card catan" onclick="selectCandidate(this)" id="card-catan">
+        <div class="cand-selected-badge">✓</div>
+        <img class="cand-photo" src="Deputado_João_Henrique_(cropped).jpg" alt="Catan">
+        <div class="cand-party">NOVO</div>
+        <div class="cand-name">João Henrique Catan</div>
+        <div class="cand-role">Dep. Estadual MS</div>
+        <div class="cand-archetype">A Direita Dura</div>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <button class="btn-start" id="btn-start" onclick="startApp()">Iniciar Análise Estratégica →</button>
+      <p class="system-note" style="margin-top:12px">Selecione o candidato que deseja monitorar</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ APP ══════════════ -->
+<div id="app">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sb-logo">
+      <div class="sb-logo-mark">V</div>
+      <div class="sb-logo-text">Veltro.IA<small>Inteligência Eleitoral</small></div>
+    </div>
+    <div class="sb-section">Análise</div>
+    <button class="sb-item active" onclick="showSection('dossie',this)"><span class="sb-icon">👤</span>Dossiê do Candidato</button>
+    <button class="sb-item" onclick="showSection('confronto',this)"><span class="sb-icon">⚔️</span>Confronto Adversários</button>
+    <div class="sb-section">Inteligência</div>
+    <button class="sb-item" onclick="showSection('monitoring',this)"><span class="sb-icon">📡</span>Monitoramento<span class="sb-num">●</span></button>
+    <button class="sb-item" onclick="showSection('alertas',this)"><span class="sb-icon">🚨</span>Alertas &amp; Tendências<span class="sb-num">6</span></button>
+    <div class="sb-section">Operacional</div>
+    <button class="sb-item" onclick="showSection('conteudo',this)"><span class="sb-icon">⚡</span>Máquina de Conteúdo</button>
+    <div class="sb-footer">
+      <div class="sb-footer-label">APIs Ativas</div>
+      <div class="api-chip"><div class="api-dot"></div>Anthropic Claude<span>ONLINE</span></div>
+      <div class="api-chip"><div class="api-dot"></div>Google AI Studio<span>ONLINE</span></div>
+      <div class="api-chip"><div class="api-dot"></div>Perplexity API<span>ONLINE</span></div>
+      <div class="api-chip"><div class="api-dot"></div>Twitter / X API<span>ONLINE</span></div>
+    </div>
+  </nav>
+
+  <div id="main">
+    <!-- TOPBAR -->
+    <div id="topbar">
+      <div class="tb-candidate">
+        <img class="tb-photo" src="ALX2160_ok_TRAT.jpg" alt="Riedel">
+        <div>
+          <div class="tb-name">Eduardo Riedel</div>
+          <div class="tb-party">PP · Governador de MS</div>
+        </div>
+      </div>
+      <div class="tb-divider"></div>
+      <div class="tb-breadcrumb" id="tb-breadcrumb">→ <b>Dossiê do Candidato</b></div>
+      <div class="tb-right">
+        <div class="tb-live"><div class="tb-live-dot"></div>AO VIVO</div>
+        <div class="tb-date">28/04/2026 · 15:42</div>
+      </div>
+    </div>
+
+    <div id="content">
+
+      <!-- ════ DOSSIÊ ════ -->
+      <div class="sec active" id="sec-dossie">
+        <div class="sec-title">Dossiê Estratégico — Eduardo Riedel</div>
+        <div class="sec-sub">Análise completa de posicionamento, base eleitoral e confronto com adversários</div>
+        <div class="dossie-grid">
+          <!-- Perfil -->
+          <div class="panel fade-in">
+            <div class="candidate-profile">
+              <img class="profile-photo" src="ALX2160_ok_TRAT.jpg" alt="Riedel">
+              <div class="profile-party">PP · Governador</div>
+              <div class="profile-name">Eduardo Riedel</div>
+              <div class="profile-role">Mato Grosso do Sul · 2026</div>
+              <div class="profile-archetype">O Gestor Moderado</div>
+            </div>
+            <div class="stat-row">
+              <div>
+                <div class="stat-label">Aprovação de Gestão</div>
+                <div class="stat-bar"><div class="stat-bar-fill" style="width:72%"></div></div>
+              </div>
+              <div class="stat-value">72%</div>
+            </div>
+            <div class="stat-row">
+              <div>
+                <div class="stat-label">Intenção de Voto</div>
+                <div class="stat-bar"><div class="stat-bar-fill" style="width:54%"></div></div>
+              </div>
+              <div class="stat-value">54%</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label">Partido</div>
+              <div class="stat-value" style="color:var(--riedel)">PP</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label">Eleitores MS</div>
+              <div class="stat-value">1,87M</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label">Municípios Fortes</div>
+              <div class="stat-value">61 / 79</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat-label">Perfil Narrativo</div>
+              <div class="stat-value" style="font-size:11px;text-align:right">Gestão · Obras · Moderação</div>
+            </div>
+          </div>
+
+          <!-- Mapa -->
+          <div class="panel fade-in" style="animation-delay:.1s">
+            <div class="map-title">Distribuição de Votos — MS 2026</div>
+            <div class="map-sub">Intensidade eleitoral por município · Simulação Veltro</div>
+            <div class="map-container">
+              <svg class="ms-map-svg" viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg">
+                <!-- MS Shape -->
+                <defs>
+                  <linearGradient id="mapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1"/>
+                    <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1"/>
+                  </linearGradient>
+                </defs>
+                <path d="M55,25 L370,18 L385,90 L380,170 L355,210 L320,260 L200,275 L100,265 L55,220 L35,130 Z"
+                      fill="url(#mapGrad)" stroke="#93c5fd" stroke-width="2"/>
+                <!-- Grid lines -->
+                <line x1="55" y1="25" x2="385" y2="18" stroke="rgba(255,255,255,.6)" stroke-width="1" stroke-dasharray="4,4"/>
+                <!-- Cities -->
+                <g class="city-dot" onclick="showCity('Campo Grande','68%','Base sólida · Capital · Centro político')">
+                  <circle cx="210" cy="155" r="22" fill="rgba(29,95,168,.85)" stroke="#fff" stroke-width="2"/>
+                  <text x="210" y="159" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">68%</text>
+                  <text x="210" y="180" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Campo Grande</text>
+                </g>
+                <g class="city-dot" onclick="showCity('Dourados','71%','Agro forte · 2ª cidade do estado')">
+                  <circle cx="190" cy="222" r="16" fill="rgba(29,95,168,.8)" stroke="#fff" stroke-width="2"/>
+                  <text x="190" y="226" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">71%</text>
+                  <text x="190" y="243" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Dourados</text>
+                </g>
+                <g class="city-dot" onclick="showCity('Três Lagoas','74%','Polo industrial · Maior crescimento')">
+                  <circle cx="348" cy="118" r="14" fill="rgba(16,90,172,.9)" stroke="#fff" stroke-width="2"/>
+                  <text x="348" y="122" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">74%</text>
+                  <text x="348" y="140" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">3 Lagoas</text>
+                </g>
+                <g class="city-dot" onclick="showCity('Corumbá','58%','Fronteira · Disputado · Potencial')">
+                  <circle cx="72" cy="138" r="13" fill="rgba(59,130,246,.65)" stroke="#fff" stroke-width="2"/>
+                  <text x="72" y="142" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">58%</text>
+                  <text x="72" y="160" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Corumbá</text>
+                </g>
+                <g class="city-dot" onclick="showCity('Ponta Porã','61%','Fronteira sul · Conservador cristão')">
+                  <circle cx="155" cy="252" r="11" fill="rgba(29,95,168,.72)" stroke="#fff" stroke-width="2"/>
+                  <text x="155" y="256" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">61%</text>
+                  <text x="155" y="272" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Ponta Porã</text>
+                </g>
+                <g class="city-dot" onclick="showCity('Coxim','67%','Norte · Agronegócio crescente')">
+                  <circle cx="200" cy="75" r="11" fill="rgba(29,95,168,.75)" stroke="#fff" stroke-width="2"/>
+                  <text x="200" y="79" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">67%</text>
+                  <text x="200" y="97" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Coxim</text>
+                </g>
+                <g class="city-dot" onclick="showCity('Nova Andradina','69%','Leste · Agro soja · Base forte')">
+                  <circle cx="312" cy="195" r="11" fill="rgba(29,95,168,.78)" stroke="#fff" stroke-width="2"/>
+                  <text x="312" y="199" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">69%</text>
+                  <text x="312" y="216" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">N. Andradina</text>
+                </g>
+                <g class="city-dot" onclick="showCity('Aquidauana','64%','Pantanal · Rural · Agro')">
+                  <circle cx="118" cy="178" r="10" fill="rgba(59,130,246,.65)" stroke="#fff" stroke-width="2"/>
+                  <text x="118" y="182" text-anchor="middle" font-size="8" font-weight="700" fill="#fff">64%</text>
+                  <text x="118" y="200" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Aquidauana</text>
+                </g>
+                <!-- Tooltip area -->
+                <rect id="map-tooltip-bg" x="0" y="0" width="0" height="0" rx="6" fill="rgba(10,22,40,.9)" display="none"/>
+                <text id="map-tooltip-city" x="0" y="0" font-size="10" font-weight="700" fill="#fff" display="none"/>
+                <text id="map-tooltip-pct" x="0" y="0" font-size="9" fill="rgba(255,255,255,.7)" display="none"/>
+              </svg>
+            </div>
+            <div class="map-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:rgba(29,95,168,.9)"></div>+70% — Domínio</div>
+              <div class="legend-item"><div class="legend-dot" style="background:rgba(29,95,168,.7)"></div>60–70% — Forte</div>
+              <div class="legend-item"><div class="legend-dot" style="background:rgba(59,130,246,.6)"></div>50–60% — Disputado</div>
+            </div>
+          </div>
+
+          <!-- 9 Bolhas -->
+          <div class="panel fade-in" style="animation-delay:.2s">
+            <div class="bolhas-title">9 Bolhas Eleitorais — Riedel</div>
+            <div class="bolhas-sub">Alinhamento estratégico por segmento identitário</div>
+            <svg viewBox="0 0 220 240" xmlns="http://www.w3.org/2000/svg" style="width:100%">
+              <!-- connections -->
+              <g stroke="rgba(0,0,0,.08)" stroke-width="1" fill="none">
+                <line x1="55" y1="55" x2="110" y2="110"/>
+                <line x1="55" y1="55" x2="160" y2="45"/>
+                <line x1="160" y1="45" x2="110" y2="110"/>
+                <line x1="160" y1="45" x2="185" y2="110"/>
+                <line x1="110" y1="110" x2="185" y2="110"/>
+                <line x1="110" y1="110" x2="100" y2="175"/>
+                <line x1="110" y1="110" x2="155" y2="170"/>
+                <line x1="185" y1="110" x2="155" y2="170"/>
+                <line x1="100" y1="175" x2="60" y2="190"/>
+                <line x1="100" y1="175" x2="155" y2="170"/>
+                <line x1="155" y1="170" x2="175" y2="210"/>
+                <line x1="60" y1="190" x2="175" y2="210"/>
+                <line x1="55" y1="55" x2="45" y2="120"/>
+                <line x1="45" y1="120" x2="110" y2="110"/>
+              </g>
+              <!-- Agro (Base Forte - azul sólido) -->
+              <circle cx="55" cy="55" r="18" fill="var(--riedel)" opacity=".9"/>
+              <text x="55" y="53" text-anchor="middle" font-size="7" font-weight="700" fill="#fff">Agro</text>
+              <text x="55" y="62" text-anchor="middle" font-size="7" fill="rgba(255,255,255,.85)">13%</text>
+              <!-- Empresários (Base Forte) -->
+              <circle cx="160" cy="45" r="13" fill="var(--riedel)" opacity=".85"/>
+              <text x="160" y="43" text-anchor="middle" font-size="6" font-weight="700" fill="#fff">Empres.</text>
+              <text x="160" y="52" text-anchor="middle" font-size="6" fill="rgba(255,255,255,.85)">6%</text>
+              <!-- Liberais Sociais (Base Forte) -->
+              <circle cx="185" cy="110" r="12" fill="var(--riedel)" opacity=".8"/>
+              <text x="185" y="108" text-anchor="middle" font-size="5.5" font-weight="700" fill="#fff">Lib.Soc.</text>
+              <text x="185" y="117" text-anchor="middle" font-size="5.5" fill="rgba(255,255,255,.85)">5%</text>
+              <!-- Dependentes do Estado (Batalha - amarelo) -->
+              <circle cx="110" cy="110" r="24" fill="#f59e0b" opacity=".8"/>
+              <text x="110" y="107" text-anchor="middle" font-size="6.5" font-weight="700" fill="#fff">Dep.Estado</text>
+              <text x="110" y="117" text-anchor="middle" font-size="6.5" fill="rgba(255,255,255,.9)">23%</text>
+              <!-- Conservadores Cristãos (Batalha) -->
+              <circle cx="155" cy="170" r="26" fill="#f59e0b" opacity=".75"/>
+              <text x="155" y="167" text-anchor="middle" font-size="6" font-weight="700" fill="#fff">Cons.Cristãos</text>
+              <text x="155" y="177" text-anchor="middle" font-size="6" fill="rgba(255,255,255,.9)">27%</text>
+              <!-- Empreendedores (Batalha) -->
+              <circle cx="45" cy="120" r="12" fill="#f59e0b" opacity=".7"/>
+              <text x="45" y="118" text-anchor="middle" font-size="5.5" font-weight="700" fill="#fff">Empr.Ind.</text>
+              <text x="45" y="127" text-anchor="middle" font-size="5.5" fill="rgba(255,255,255,.85)">5%</text>
+              <!-- Progressistas (Muro) -->
+              <circle cx="100" cy="175" r="17" fill="#9ca3af" opacity=".6"/>
+              <text x="100" y="173" text-anchor="middle" font-size="6" fill="#fff">Progres.</text>
+              <text x="100" y="182" text-anchor="middle" font-size="6" fill="rgba(255,255,255,.8)">11%</text>
+              <!-- Militantes Esq (Muro) -->
+              <circle cx="60" cy="195" r="13" fill="#9ca3af" opacity=".55"/>
+              <text x="60" y="193" text-anchor="middle" font-size="5.5" fill="#fff">Mil.Esq.</text>
+              <text x="60" y="202" text-anchor="middle" font-size="5.5" fill="rgba(255,255,255,.8)">7%</text>
+              <!-- Extrema Dir (Muro) -->
+              <circle cx="175" cy="215" r="10" fill="#9ca3af" opacity=".5"/>
+              <text x="175" y="213" text-anchor="middle" font-size="5.5" fill="#fff">Ext.Dir.</text>
+              <text x="175" y="222" text-anchor="middle" font-size="5.5" fill="rgba(255,255,255,.8)">3%</text>
+            </svg>
+            <div class="bolha-legend">
+              <div class="bl-item"><div class="bl-dot" style="background:var(--riedel)"></div><span style="font-size:11px;font-weight:600">Base Forte</span><span style="font-size:10px;color:var(--muted);margin-left:4px">Agro + Empresários + Liberais</span></div>
+              <div class="bl-item"><div class="bl-dot" style="background:#f59e0b"></div><span style="font-size:11px;font-weight:600">A Batalha</span><span style="font-size:10px;color:var(--muted);margin-left:4px">Dep.Estado + Cons.Cristãos</span></div>
+              <div class="bl-item"><div class="bl-dot" style="background:#9ca3af"></div><span style="font-size:11px;font-weight:600">O Muro</span><span style="font-size:10px;color:var(--muted);margin-left:4px">Progressistas + Esquerda</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mini competitors -->
+        <div style="margin-top:4px">
+          <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px">Principais Adversários</div>
+          <div class="competitors-strip">
+            <div class="comp-mini trad">
+              <img src="160587.jpgmaior.jpg" alt="Trad">
+              <div class="comp-mini-info">
+                <h4>Fábio Trad</h4>
+                <p>PT · O Comunicador de Esquerda</p>
+                <p style="font-size:10px;color:var(--trad);margin-top:4px">Muro: Agro · Empresários · Cons.Cristãos</p>
+              </div>
+              <div class="comp-mini-stat">
+                <strong style="color:var(--trad)">23%</strong>
+                <span>intenção</span>
+              </div>
+            </div>
+            <div class="comp-mini catan">
+              <img src="Deputado_João_Henrique_(cropped).jpg" alt="Catan">
+              <div class="comp-mini-info">
+                <h4>João H. Catan</h4>
+                <p>NOVO · A Direita Dura</p>
+                <p style="font-size:10px;color:var(--catan);margin-top:4px">Risco: Agro linha-dura · Cons.Cristãos</p>
+              </div>
+              <div class="comp-mini-stat">
+                <strong style="color:var(--catan)">15%</strong>
+                <span>intenção</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="sec-next" onclick="showSection('confronto',document.querySelectorAll('.sb-item')[1])">Ver Confronto com Adversários →</button>
+      </div>
+
+      <!-- ════ CONFRONTO ════ -->
+      <div class="sec" id="sec-confronto">
+        <div class="sec-title">Confronto com Adversários</div>
+        <div class="sec-sub">Tabuleiro discursivo e matriz de alinhamento por bolha eleitoral</div>
+
+        <table class="confronto-table">
+          <thead>
+            <tr>
+              <th>Candidato</th>
+              <th>Narrativa</th>
+              <th>Agro<br>13%</th>
+              <th>Empres.<br>6%</th>
+              <th>Emp.Ind.<br>5%</th>
+              <th>Dep.Est.<br>23%</th>
+              <th>Lib.Soc.<br>5%</th>
+              <th>Cons.Crist.<br>27%</th>
+              <th>Progress.<br>11%</th>
+              <th>Mil.Esq.<br>7%</th>
+              <th>Ext.Dir.<br>3%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Eduardo Riedel</strong><br><span style="font-size:10px;color:var(--muted)">PP · Gestor Moderado</span></td>
+              <td style="font-size:11px;text-align:left;max-width:120px">Gestão técnica, obras, moderação</td>
+              <td><span class="ic">✅</span></td>
+              <td><span class="ic">✅</span></td>
+              <td><span class="ic">🎯</span></td>
+              <td><span class="ic">🎯</span></td>
+              <td><span class="ic">✅</span></td>
+              <td><span class="ic">🎯</span></td>
+              <td><span class="ic">❌</span></td>
+              <td><span class="ic">❌</span></td>
+              <td><span class="ic">❌</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--trad)">Fábio Trad</strong><br><span style="font-size:10px;color:var(--muted)">PT · Comunicador Esquerda</span></td>
+              <td style="font-size:11px;text-align:left">Defesa Lula + ataque à elite local</td>
+              <td><span class="ic">❌</span></td>
+              <td><span class="ic">❌</span></td>
+              <td><span class="ic">🎯</span></td>
+              <td><span class="ic">✅</span></td>
+              <td><span class="ic">🎯</span></td>
+              <td><span class="ic">🎯</span></td>
+              <td><span class="ic">✅</span></td>
+              <td><span class="ic">✅</span></td>
+              <td><span class="ic">❌</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--catan)">J.H. Catan</strong><br><span style="font-size:10px;color:var(--muted)">NOVO · Direita Dura</span></td>
+              <td style="font-size:11px;text-align:left">Guerra cultural, anti-sistema, punitivismo</td>
+              <td><span class="ic">✅</span></td>
+              <td><span class="ic">🎯</span></td>
+              <td><span class="ic">🎯</span></td>
+              <td><span class="ic">🎯</span></td>
+              <td><span class="ic">❌</span></td>
+              <td><span class="ic">✅</span></td>
+              <td><span class="ic">❌</span></td>
+              <td><span class="ic">❌</span></td>
+              <td><span class="ic">✅</span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--muted)">
+          <span>✅ Base Forte</span><span>🎯 Em Disputa</span><span>❌ Resistência</span>
+        </div>
+
+        <div class="cand-cards-grid" style="margin-top:28px">
+          <!-- Riedel -->
+          <div class="cand-detail">
+            <div class="cand-detail-header riedel">
+              <img src="ALX2160_ok_TRAT.jpg" alt="Riedel">
+              <div>
+                <h3>Eduardo Riedel</h3>
+                <p>PP · O Gestor Moderado</p>
+              </div>
+            </div>
+            <div class="cand-detail-body">
+              <div class="analysis-block forte">
+                <h5>✅ Base Forte</h5>
+                <p>Agro (13% — herói econômico), Empresários (6%), Liberais Sociais (5% — gestão técnica).</p>
+              </div>
+              <div class="analysis-block batalha">
+                <h5>🎯 A Batalha</h5>
+                <p>Dependentes do Estado (23% — via Mais Social), Conservadores Cristãos (27% — ganha pela ordem, perde na falta de pauta moral).</p>
+              </div>
+              <div class="analysis-block muro">
+                <h5>❌ O Muro</h5>
+                <p>Militantes de Esquerda e Extrema Direita (ambos o acham "moderado demais").</p>
+              </div>
+            </div>
+          </div>
+          <!-- Trad -->
+          <div class="cand-detail">
+            <div class="cand-detail-header trad">
+              <img src="160587.jpgmaior.jpg" alt="Trad">
+              <div>
+                <h3>Fábio Trad</h3>
+                <p>PT · O Comunicador de Esquerda</p>
+              </div>
+            </div>
+            <div class="cand-detail-body">
+              <div class="analysis-block forte">
+                <h5>✅ Base Forte</h5>
+                <p>Militantes de Esquerda (7%), Progressistas (11% — agrada público urbano escolarizado).</p>
+              </div>
+              <div class="analysis-block batalha">
+                <h5>🎯 A Batalha</h5>
+                <p>Dependentes do Estado urbanos — necessita traduzir discurso jurídico para concretude de bairro.</p>
+              </div>
+              <div class="analysis-block muro">
+                <h5>❌ O Muro</h5>
+                <p>Agro, Empresários e Conservadores Cristãos. Visto como "blogueiro de Brasília" desconectado do estado.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Catan -->
+          <div class="cand-detail">
+            <div class="cand-detail-header catan">
+              <img src="Deputado_João_Henrique_(cropped).jpg" alt="Catan">
+              <div>
+                <h3>João H. Catan</h3>
+                <p>NOVO · A Direita Dura</p>
+              </div>
+            </div>
+            <div class="cand-detail-body">
+              <div class="analysis-block forte">
+                <h5>✅ Base Forte</h5>
+                <p>Extrema Direita (3%), Conservadores Cristãos (27%), Agro linha-dura (13% — onde Riedel foi fraco).</p>
+              </div>
+              <div class="analysis-block batalha">
+                <h5>🎯 A Batalha</h5>
+                <p>Empreendedores Individuais (5% — narrativa anti-estado, "trabalhador que se vira").</p>
+              </div>
+              <div class="analysis-block muro">
+                <h5>❌ O Muro</h5>
+                <p>Progressistas, Esquerda e Liberais Sociais (que rejeitam o flerte com o radicalismo).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="sec-next" onclick="showSection('monitoring',document.querySelectorAll('.sb-item')[2])">Ver Monitoramento →</button>
+      </div>
+
+      <!-- ════ MONITORAMENTO ════ -->
+      <div class="sec" id="sec-monitoring">
+        <div class="sec-title">Centro de Monitoramento</div>
+        <div class="sec-sub">Acompanhamento em tempo real — Twitter/X · WhatsApp · Notícias</div>
+        <div class="tabs">
+          <button class="tab active" onclick="showTab('twitter',this)">𝕏 Twitter / X</button>
+          <button class="tab" onclick="showTab('whatsapp',this)">💬 WhatsApp</button>
+          <button class="tab" onclick="showTab('noticias',this)">📰 Notícias</button>
+        </div>
+
+        <!-- Twitter -->
+        <div class="tab-panel active" id="tab-twitter">
+          <div class="monitoring-grid">
+            <div class="trending-list">
+              <h4>🔥 Top Tendências — MS</h4>
+              <div class="trend-item">
+                <div class="trend-num">1</div>
+                <div class="trend-hash">#Eleições2026MS</div>
+                <div class="trend-vol">4.567</div>
+                <div class="trend-badge up">↑ 12%</div>
+              </div>
+              <div class="trend-item">
+                <div class="trend-num">2</div>
+                <div class="trend-hash">#AgroMS</div>
+                <div class="trend-vol">3.456</div>
+                <div class="trend-badge up">↑ 8%</div>
+              </div>
+              <div class="trend-item">
+                <div class="trend-num">3</div>
+                <div class="trend-hash">#CampoGrande</div>
+                <div class="trend-vol">3.245</div>
+                <div class="trend-badge up">↑ 5%</div>
+              </div>
+              <div class="trend-item">
+                <div class="trend-num">4</div>
+                <div class="trend-hash">MatoGrossoDoSul</div>
+                <div class="trend-vol">2.987</div>
+                <div class="trend-badge up">↑ 3%</div>
+              </div>
+              <div class="trend-item">
+                <div class="trend-num">5</div>
+                <div class="trend-hash">#GovernoMS</div>
+                <div class="trend-vol">2.341</div>
+                <div class="trend-badge up">↑ 6%</div>
+              </div>
+              <div class="trend-item">
+                <div class="trend-num">6</div>
+                <div class="trend-hash">#PantanalMS</div>
+                <div class="trend-vol">2.654</div>
+                <div class="trend-badge up">↑ 2%</div>
+              </div>
+              <div class="trend-item">
+                <div class="trend-num">7</div>
+                <div class="trend-hash">#PolíticaMS</div>
+                <div class="trend-vol">1.876</div>
+                <div class="trend-badge up">↑ 4%</div>
+              </div>
+              <div style="margin-top:16px;padding:12px;background:var(--cream);border-radius:10px">
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
+                  <div><div style="font-size:18px;font-weight:800">144</div><div style="font-size:10px;color:var(--muted)">Tweets coletados</div></div>
+                  <div><div style="font-size:18px;font-weight:800">20</div><div style="font-size:10px;color:var(--muted)">Trends ativos</div></div>
+                  <div><div style="font-size:18px;font-weight:800">3</div><div style="font-size:10px;color:var(--muted)">Buscas ativas</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="tweets-panel">
+              <h4>💬 Últimos Tweets Capturados</h4>
+              <div class="tweet-item">
+                <div class="tweet-meta">
+                  <div class="tweet-avatar" style="background:#dbeafe;color:var(--riedel)">R</div>
+                  <div class="tweet-user">AgroMS_Notícias</div>
+                  <div class="tweet-handle">@agromsnoticias</div>
+                  <div class="tweet-time">há 12min</div>
+                </div>
+                <div class="tweet-text">Riedel visita polo agroindustrial de Dourados e anuncia R$ 180M em crédito rural para o segundo semestre. Produtores comemoraram. #AgroMS #Riedel2026</div>
+                <span class="tweet-sent pos">Positivo</span>
+              </div>
+              <div class="tweet-item">
+                <div class="tweet-meta">
+                  <div class="tweet-avatar" style="background:#fee2e2;color:var(--trad)">F</div>
+                  <div class="tweet-user">FabioTradPT</div>
+                  <div class="tweet-handle">@fabioptms</div>
+                  <div class="tweet-time">há 34min</div>
+                </div>
+                <div class="tweet-text">Campo Grande tem a maior fila de saúde do interior do Brasil. Isso é resultado de 4 anos de Riedel. A população não aguenta mais. #SaúdeMS</div>
+                <span class="tweet-sent neg">Negativo — ataque</span>
+              </div>
+              <div class="tweet-item">
+                <div class="tweet-meta">
+                  <div class="tweet-avatar" style="background:#ffedd5;color:var(--catan)">C</div>
+                  <div class="tweet-user">JHCatan_Oficial</div>
+                  <div class="tweet-handle">@jhcatan</div>
+                  <div class="tweet-time">há 1h</div>
+                </div>
+                <div class="tweet-text">MS precisa de um governador com coragem, não de administrador de crise. O pantanal está pegando fogo e o governo ficou em silêncio. Chega de moderação! #MSComCoragem</div>
+                <span class="tweet-sent neg">Negativo — ataque</span>
+              </div>
+              <div class="tweet-item">
+                <div class="tweet-meta">
+                  <div class="tweet-avatar" style="background:#dcfce7;color:var(--green)">P</div>
+                  <div class="tweet-user">ProdutorMS</div>
+                  <div class="tweet-handle">@produtorms2026</div>
+                  <div class="tweet-time">há 2h</div>
+                </div>
+                <div class="tweet-text">Governador Riedel entende o campo. Primeira vez em anos que temos logística decente pra escoar soja no interior. Apoio total. #AgroMS #Riedel</div>
+                <span class="tweet-sent pos">Positivo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="tab-panel" id="tab-whatsapp">
+          <div class="wa-stats">
+            <div class="wa-stat"><div class="wa-stat-num">15</div><div class="wa-stat-label">Grupos Analisados</div></div>
+            <div class="wa-stat"><div class="wa-stat-num">600</div><div class="wa-stat-label">Mensagens</div></div>
+            <div class="wa-stat"><div class="wa-stat-num">93,8%</div><div class="wa-stat-label">Taxa de Sucesso</div></div>
+            <div class="wa-stat"><div class="wa-stat-num">207</div><div class="wa-stat-label">Participantes Médios</div></div>
+          </div>
+          <div class="wa-groups">
+            <div class="wa-group">
+              <div class="wa-group-header">
+                <h5>Produtores Rurais MS</h5>
+                <span class="wa-sent-badge pos">😊 Positivo</span>
+              </div>
+              <div class="wa-topics">
+                <span class="wa-topic">Crédito Rural</span>
+                <span class="wa-topic">Logística</span>
+                <span class="wa-topic">Riedel</span>
+              </div>
+              <div class="wa-last">"Governador Riedel assinou o crédito. Finalmente alguém que entende o campo."</div>
+            </div>
+            <div class="wa-group">
+              <div class="wa-group-header">
+                <h5>Moradores Campo Grande Sul</h5>
+                <span class="wa-sent-badge mix">😐 Misto</span>
+              </div>
+              <div class="wa-topics">
+                <span class="wa-topic">Saúde</span>
+                <span class="wa-topic">Segurança</span>
+                <span class="wa-topic">Infraestrutura</span>
+              </div>
+              <div class="wa-last">"Vai esquecer a gente depois que ganhar." / "Participei da reunião, fiquei impressionado."</div>
+            </div>
+            <div class="wa-group">
+              <div class="wa-group-header">
+                <h5>Empresários Dourados</h5>
+                <span class="wa-sent-badge pos">😊 Positivo</span>
+              </div>
+              <div class="wa-topics">
+                <span class="wa-topic">Desburocratização</span>
+                <span class="wa-topic">Emprego</span>
+                <span class="wa-topic">Investimento</span>
+              </div>
+              <div class="wa-last">"ACE apoiando Riedel. Desburocratização funcionou de verdade aqui."</div>
+            </div>
+            <div class="wa-group">
+              <div class="wa-group-header">
+                <h5>Pautas Sociais MS</h5>
+                <span class="wa-sent-badge mix">😐 Misto</span>
+              </div>
+              <div class="wa-topics">
+                <span class="wa-topic">Educação</span>
+                <span class="wa-topic">Saúde Pública</span>
+                <span class="wa-topic">Interior</span>
+              </div>
+              <div class="wa-last">"Mais Social chegou no nosso município — mas ainda falta médico no posto."</div>
+            </div>
+            <div class="wa-group">
+              <div class="wa-group-header">
+                <h5>Igrejas Evangélicas MS</h5>
+                <span class="wa-sent-badge pos">😊 Positivo</span>
+              </div>
+              <div class="wa-topics">
+                <span class="wa-topic">Família</span>
+                <span class="wa-topic">Segurança</span>
+                <span class="wa-topic">Valores</span>
+              </div>
+              <div class="wa-last">"Pastor recomendou Riedel no culto. Gestão com respeito aos nossos valores."</div>
+            </div>
+            <div class="wa-group">
+              <div class="wa-group-header">
+                <h5>Jovens Campo Grande</h5>
+                <span class="wa-sent-badge mix">😐 Misto</span>
+              </div>
+              <div class="wa-topics">
+                <span class="wa-topic">Emprego</span>
+                <span class="wa-topic">Digital</span>
+                <span class="wa-topic">Futuro</span>
+              </div>
+              <div class="wa-last">"Riedel fez bastante mas falta oportunidade pra quem quer empreender aqui no MS."</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notícias -->
+        <div class="tab-panel" id="tab-noticias">
+          <div class="news-grid">
+            <div class="news-item">
+              <div class="news-source">📰 Campo Grande News</div>
+              <div class="news-title">Riedel anuncia R$ 180 milhões em crédito rural para produtores de MS</div>
+              <div class="news-preview">O governador Eduardo Riedel assinou nesta terça-feira pacote de crédito rural para beneficiar produtores do agronegócio de Mato Grosso do Sul, com foco nas regiões de Dourados, Três Lagoas e Aquidauana.</div>
+              <div class="news-footer"><span class="news-date">28/04/2026 · 10:32</span><span class="news-tag pos">Positivo</span></div>
+            </div>
+            <div class="news-item">
+              <div class="news-source">📰 G1 MS</div>
+              <div class="news-title">Filas em UPAs de Campo Grande crescem 22% no primeiro trimestre</div>
+              <div class="news-preview">Levantamento da Secretaria de Saúde aponta aumento no tempo de espera em unidades de pronto-atendimento da capital. Oposição cobra posicionamento do governador.</div>
+              <div class="news-footer"><span class="news-date">27/04/2026 · 14:15</span><span class="news-tag neg">Atenção — oposição</span></div>
+            </div>
+            <div class="news-item">
+              <div class="news-source">📰 Correio do Estado</div>
+              <div class="news-title">Polo Industrial de Campo Grande recebe R$ 4,2 bilhões em novos investimentos</div>
+              <div class="news-preview">Governador Riedel participa de cerimônia de assinatura de contratos com empresas nacionais e internacionais interessadas na expansão do parque industrial de MS.</div>
+              <div class="news-footer"><span class="news-date">26/04/2026 · 09:00</span><span class="news-tag pos">Positivo</span></div>
+            </div>
+            <div class="news-item">
+              <div class="news-source">📰 Midiamax</div>
+              <div class="news-title">Catan acusa Riedel de omissão nos incêndios no Pantanal</div>
+              <div class="news-preview">O deputado estadual João Henrique Catan (NOVO) divulgou vídeo criticando a gestão do governo estadual diante dos focos de queimada que atingem a região do Pantanal sul-mato-grossense.</div>
+              <div class="news-footer"><span class="news-date">25/04/2026 · 16:48</span><span class="news-tag neg">Monitorar — ataque adversário</span></div>
+            </div>
+          </div>
+        </div>
+        <button class="sec-next" onclick="showSection('alertas',document.querySelectorAll('.sb-item')[3])">Ver Alertas &amp; Tendências →</button>
+      </div>
+
+      <!-- ════ ALERTAS ════ -->
+      <div class="sec" id="sec-alertas">
+        <div class="sec-title">Alertas &amp; Tendências</div>
+        <div class="sec-sub">Sinais de oportunidade e risco identificados pelo sistema em tempo real</div>
+        <div class="alertas-grid">
+          <div class="alerta-card oportunidade">
+            <div class="alerta-header">
+              <span class="alerta-icon">🟢</span>
+              <span class="alerta-type">Oportunidade</span>
+            </div>
+            <div class="alerta-title">Conservadores Cristãos — janela aberta</div>
+            <div class="alerta-text">Riedel domina pela "ordem" mas não tem pauta moral clara. 27% do eleitorado MS. Catan ainda não consolidou esse segmento. Janela de 6 semanas para criar narrativa de família + segurança.</div>
+            <span class="alerta-bolha">🟡 Cons. Cristãos · 27%</span>
+          </div>
+          <div class="alerta-card risco">
+            <div class="alerta-header">
+              <span class="alerta-icon">🔴</span>
+              <span class="alerta-type">Risco Crítico</span>
+            </div>
+            <div class="alerta-title">Catan avançando no Agro linha-dura</div>
+            <div class="alerta-text">Municípios rurais com menos de 40 mil habitantes registram crescimento de Catan via grupos de WhatsApp ligados a sindicatos rurais. Narrativa: "Riedel é moderado demais para o campo de verdade".</div>
+            <span class="alerta-bolha">🔵 Agro · 13%</span>
+          </div>
+          <div class="alerta-card oportunidade">
+            <div class="alerta-header">
+              <span class="alerta-icon">🟢</span>
+              <span class="alerta-type">Oportunidade</span>
+            </div>
+            <div class="alerta-title">Mais Social pode converter 8–12% dos Dep. do Estado</div>
+            <div class="alerta-text">Programa Mais Social tem alta aprovação mas baixa atribuição a Riedel. 73% dos beneficiários não sabem que é iniciativa do governador. Ação de comunicação pode recuperar esse crédito.</div>
+            <span class="alerta-bolha">🟡 Dep. do Estado · 23%</span>
+          </div>
+          <div class="alerta-card tendencia">
+            <div class="alerta-header">
+              <span class="alerta-icon">🔵</span>
+              <span class="alerta-type">Tendência</span>
+            </div>
+            <div class="alerta-title">#AgroMS crescendo 8% em 7 dias</div>
+            <div class="alerta-text">Hashtag e termos relacionados ao agronegócio sul-mato-grossense em alta consistente no X/Twitter. Momento ideal para associar entregas do governo Riedel ao tema. Janela de 10–14 dias.</div>
+            <span class="alerta-bolha">📊 Twitter · 3.456 menções</span>
+          </div>
+          <div class="alerta-card risco">
+            <div class="alerta-header">
+              <span class="alerta-icon">🔴</span>
+              <span class="alerta-type">Risco</span>
+            </div>
+            <div class="alerta-title">Trad acelerando no digital — alta intensidade</div>
+            <div class="alerta-text">Fábio Trad publica 4–6 vídeos por dia no Instagram e X. Linguagem de "comentarista político". Alcance crescendo 15% semana a semana. Sem resposta ativa de Riedel ao volume de ataques.</div>
+            <span class="alerta-bolha">📱 Instagram / X · Monitoramento</span>
+          </div>
+          <div class="alerta-card tendencia">
+            <div class="alerta-header">
+              <span class="alerta-icon">🔵</span>
+              <span class="alerta-type">Tendência</span>
+            </div>
+            <div class="alerta-title">Empreendedores Individuais — segmento disputado</div>
+            <div class="alerta-text">MEIs e autônomos de MS são o segmento mais disputado de 2026 (52/48 na pesquisa nacional). Catan e Trad não têm pauta específica. Riedel pode capturar com narrativa de "desburocratização + autonomia".</div>
+            <span class="alerta-bolha">🟡 Empr. Individuais · 5%</span>
+          </div>
+        </div>
+        <button class="sec-next" onclick="showSection('conteudo',document.querySelectorAll('.sb-item')[4])">Ver Máquina de Conteúdo →</button>
+      </div>
+
+      <!-- ════ CONTEÚDO ════ -->
+      <div class="sec" id="sec-conteudo">
+        <div class="sec-title">Máquina de Conteúdo</div>
+        <div class="sec-sub">Selecione uma bolha eleitoral e gere conteúdo calibrado para aquele segmento</div>
+        <div class="content-layout">
+
+          <!-- Seletor de Bolhas -->
+          <div class="bolhas-selector">
+            <h4>Selecione a Bolha</h4>
+            <button class="bolha-btn active" onclick="selectBolha(this,'cristao')">
+              <div class="bolha-btn-dot" style="background:#6366f1"></div>
+              <div class="bolha-btn-info"><span class="bolha-btn-name">Cons. Cristãos</span><span class="bolha-btn-pct">27% · 57M pessoas</span></div>
+              <span class="bolha-btn-status status-batalha">Batalha</span>
+            </button>
+            <button class="bolha-btn" onclick="selectBolha(this,'agro')">
+              <div class="bolha-btn-dot" style="background:#65a30d"></div>
+              <div class="bolha-btn-info"><span class="bolha-btn-name">Agro</span><span class="bolha-btn-pct">13% · 28M pessoas</span></div>
+              <span class="bolha-btn-status status-forte">Base Forte</span>
+            </button>
+            <button class="bolha-btn" onclick="selectBolha(this,'dep_estado')">
+              <div class="bolha-btn-dot" style="background:#dc2626"></div>
+              <div class="bolha-btn-info"><span class="bolha-btn-name">Dep. do Estado</span><span class="bolha-btn-pct">23% · 49M pessoas</span></div>
+              <span class="bolha-btn-status status-batalha">Batalha</span>
+            </button>
+            <button class="bolha-btn" onclick="selectBolha(this,'empresarios')">
+              <div class="bolha-btn-dot" style="background:#0369a1"></div>
+              <div class="bolha-btn-info"><span class="bolha-btn-name">Empresários</span><span class="bolha-btn-pct">6% · 13M pessoas</span></div>
+              <span class="bolha-btn-status status-forte">Base Forte</span>
+            </button>
+            <button class="bolha-btn" onclick="selectBolha(this,'liberais')">
+              <div class="bolha-btn-dot" style="background:#0891b2"></div>
+              <div class="bolha-btn-info"><span class="bolha-btn-name">Liberais Sociais</span><span class="bolha-btn-pct">5% · 11M pessoas</span></div>
+              <span class="bolha-btn-status status-forte">Base Forte</span>
+            </button>
+            <button class="bolha-btn" onclick="selectBolha(this,'empreend')">
+              <div class="bolha-btn-dot" style="background:#d97706"></div>
+              <div class="bolha-btn-info"><span class="bolha-btn-name">Empr. Individuais</span><span class="bolha-btn-pct">5% · 11M pessoas</span></div>
+              <span class="bolha-btn-status status-batalha">Batalha</span>
+            </button>
+            <button class="bolha-btn" onclick="selectBolha(this,'progressistas')">
+              <div class="bolha-btn-dot" style="background:#7c3aed"></div>
+              <div class="bolha-btn-info"><span class="bolha-btn-name">Progressistas</span><span class="bolha-btn-pct">11% · 23M pessoas</span></div>
+              <span class="bolha-btn-status status-muro">Muro</span>
+            </button>
+            <button class="bolha-btn" onclick="selectBolha(this,'militantes')">
+              <div class="bolha-btn-dot" style="background:#be123c"></div>
+              <div class="bolha-btn-info"><span class="bolha-btn-name">Militantes Esq.</span><span class="bolha-btn-pct">7% · 15M pessoas</span></div>
+              <span class="bolha-btn-status status-muro">Muro</span>
+            </button>
+            <button class="bolha-btn" onclick="selectBolha(this,'extdir')">
+              <div class="bolha-btn-dot" style="background:#374151"></div>
+              <div class="bolha-btn-info"><span class="bolha-btn-name">Extrema Direita</span><span class="bolha-btn-pct">3% · 6M pessoas</span></div>
+              <span class="bolha-btn-status status-muro">Muro</span>
+            </button>
+          </div>
+
+          <!-- Conteúdo Gerado -->
+          <div class="content-panel">
+            <h4 id="content-bolha-title">Conteúdo para: Conservadores Cristãos</h4>
+            <div class="content-block">
+              <div class="content-block-label"><span class="content-block-icon">📸</span><span>Copy — Instagram</span></div>
+              <div class="content-text" id="ct-instagram">Em Mato Grosso do Sul, a família vem primeiro. Eduardo Riedel tem governado com responsabilidade, ordem e respeito pelos valores que fazem nossa terra grande. O MS que você quer para seus filhos. 🙏 #RiedelMS #FamíliaMS #MSComRiedel</div>
+              <div class="content-actions">
+                <button class="content-action">📋 Copiar</button>
+                <button class="content-action">✏️ Editar</button>
+                <button class="content-action">📅 Agendar</button>
+              </div>
+            </div>
+            <div class="content-block">
+              <div class="content-block-label"><span class="content-block-icon">💬</span><span>Mensagem — WhatsApp</span></div>
+              <div class="content-text" id="ct-whatsapp">Boa tarde, irmão(ã)! Eduardo Riedel tem protegido nossas famílias com gestão séria e ordem no estado. Compartilhe com quem valoriza os valores que nos unem. Deus abençoe nosso MS! 🙏</div>
+              <div class="content-actions">
+                <button class="content-action">📋 Copiar</button>
+                <button class="content-action">📤 Enviar</button>
+              </div>
+            </div>
+            <div class="content-block">
+              <div class="content-block-label"><span class="content-block-icon">🖼️</span><span>Brief de Imagem</span></div>
+              <div class="content-text" id="ct-imagem">Riedel em ambiente familiar/comunitário no interior de MS. Lideranças religiosas ao fundo, discreta. Tom quente e dourado, fim de tarde. Sem material de campanha visível. Foco em presença e confiança.</div>
+              <div class="content-actions">
+                <button class="content-action" onclick="simulateGenerate(this)">🎨 Gerar via Google AI</button>
+              </div>
+            </div>
+            <div class="content-block">
+              <div class="content-block-label"><span class="content-block-icon">🎬</span><span>Roteiro — Vídeo 30s</span></div>
+              <div class="content-text" id="ct-video" style="font-size:12px;color:var(--muted)">CENA 1 (0–8s): Interior de MS, família reunida ao entardecer. VOZ OFF: "Em MS, os valores que nos unem são mais fortes que qualquer divisão." CENA 2 (8–18s): Riedel ouvindo moradores numa cidade pequena. "Eduardo Riedel sabe o que importa para quem mora no interior." CENA 3 (18–27s): Obras, crianças em escola nova, estrada pavimentada. "Gestão com responsabilidade. Entregas reais." CENA 4 (27–30s): Close do governador. "Riedel 2026."</div>
+              <div class="content-actions">
+                <button class="content-action" onclick="simulateGenerate(this)">🎬 Gerar via Google AI</button>
+                <button class="content-action">📋 Copiar roteiro</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- APIs -->
+          <div class="api-panel">
+            <h4>APIs Conectadas</h4>
+            <div class="api-card">
+              <div class="api-card-header">
+                <div class="api-dot-live"></div>
+                <div class="api-card-name">Anthropic Claude</div>
+              </div>
+              <div class="api-card-use">Textos, copys, roteiros e estratégia de mensagem por segmento</div>
+              <button class="btn-api" onclick="simulateGenerate(this)">Gerar Copy →</button>
+            </div>
+            <div class="api-card">
+              <div class="api-card-header">
+                <div class="api-dot-live"></div>
+                <div class="api-card-name">Google AI Studio</div>
+              </div>
+              <div class="api-card-use">Imagens de campanha e vídeos com avatar do candidato</div>
+              <button class="btn-api" onclick="simulateGenerate(this)">Criar Imagem →</button>
+            </div>
+            <div class="api-card">
+              <div class="api-card-header">
+                <div class="api-dot-live"></div>
+                <div class="api-card-name">Perplexity API</div>
+              </div>
+              <div class="api-card-use">Pesquisa em tempo real de dados eleitorais, TSE e notícias</div>
+              <button class="btn-api" onclick="simulateGenerate(this)">Pesquisar Dados →</button>
+            </div>
+            <div class="api-card">
+              <div class="api-card-header">
+                <div class="api-dot-live"></div>
+                <div class="api-card-name">Twitter / X API</div>
+              </div>
+              <div class="api-card-use">Monitoramento de menções, sentimento e tendências em MS</div>
+              <button class="btn-api" onclick="simulateGenerate(this)">Monitorar →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+// ── DATA ──
+const bolhaContent = {
+  cristao: {
+    title: 'Conservadores Cristãos',
+    instagram: 'Em Mato Grosso do Sul, a família vem primeiro. Eduardo Riedel tem governado com responsabilidade, ordem e respeito pelos valores que fazem nossa terra grande. O MS que você quer para seus filhos. 🙏 #RiedelMS #FamíliaMS #MSComRiedel',
+    whatsapp: 'Boa tarde, irmão(ã)! Eduardo Riedel tem protegido nossas famílias com gestão séria e ordem no estado. Compartilhe com quem valoriza os valores que nos unem. Deus abençoe nosso MS! 🙏',
+    imagem: 'Riedel em ambiente familiar/comunitário no interior de MS. Lideranças religiosas ao fundo, discreta. Tom quente e dourado, fim de tarde. Sem material de campanha visível. Foco em presença e confiança.',
+    video: 'CENA 1 (0–8s): Interior de MS, família reunida ao entardecer. VOZ OFF: "Em MS, os valores que nos unem são mais fortes que qualquer divisão." CENA 2 (8–18s): Riedel ouvindo moradores numa cidade pequena. "Sabe o que importa para quem mora no interior." CENA 3 (18–27s): Escola nova, estrada pavimentada. "Gestão com responsabilidade. Entregas reais." CENA 4 (27–30s): Close do governador. "Riedel 2026."'
+  },
+  agro: {
+    title: 'Agro',
+    instagram: 'O agronegócio de MS é o motor do Brasil. Eduardo Riedel conhece o campo — e governa para quem faz o estado crescer. Crédito, logística e respeito ao produtor. Sem populismo. Só entrega. 🌾 #AgroMS #RiedelMS #MSProdutor',
+    whatsapp: 'Produtor, Riedel é nosso! R$ 180M em crédito rural assinado essa semana. Repasse pro grupo do sindicato e da cooperativa. Quem planta sabe quem colhe. 🌱',
+    imagem: 'Riedel no campo, sem terno. Lavoura de soja ou gado nelore ao fundo. Luz de manhã, tom épico. Expressão séria mas confiante. Zero artefatos de campanha — autenticidade acima de tudo.',
+    video: 'CENA 1 (0–8s): Drone sobre lavoura de soja de MS ao amanhecer. VOZ: "Mato Grosso do Sul é o agro mais produtivo do Centro-Oeste." CENA 2 (8–18s): Riedel conversando com produtor rural. "E Eduardo Riedel sabe disso — porque governa para quem produz." CENA 3 (18–27s): Estradas vicinais novas, silos, máquinas. "Logística, crédito e respeito. É assim que se governa para o produtor." CENA 4 (27–30s): Logo Riedel 2026.'
+  },
+  dep_estado: {
+    title: 'Dependentes do Estado',
+    instagram: 'Em MS, Mais Social não é promessa — é entrega. Riedel expandiu acesso à saúde, à educação e ao emprego em todo o estado. Porque quem trabalha duro merece mais que discurso. 💪 #MaisSocialMS #Riedel',
+    whatsapp: 'Você trabalha todo dia e merece um governador que trabalha por você. Riedel entregou saúde, escola e oportunidade nos 79 municípios de MS. Fale pra sua vizinhança. 🏥',
+    imagem: 'UBS ou escola renovada em município do interior de MS. Mãe com filho, expressão de alívio. Riedel ao fundo, discreto. Foco nas pessoas, não no político. Tom esperançoso.',
+    video: 'CENA 1 (0–8s): UPA nova em cidade pequena do interior. VOZ: "Em MS, Riedel entregou mais de 40 obras de saúde." CENA 2 (8–20s): Entrevista com moradora. "Antes a gente ia para Campo Grande. Agora tem atendimento aqui mesmo." CENA 3 (20–27s): Obras, escola nova, posto de saúde. "Porque quem vive longe não mora longe do direito." CENA 4 (27–30s): "Riedel 2026. Gestão para todos os 79."'
+  },
+  empresarios: {
+    title: 'Empresários',
+    instagram: 'MS é o estado que mais cresceu no Brasil. Eduardo Riedel criou o ambiente de negócios que o empresário precisava: desburocratização, incentivos e segurança jurídica. Resultado: R$ 4,2 bilhões em investimentos. 📈 #EmpresaMS #RiedelMS',
+    whatsapp: 'Empresário, Riedel zerou burocracia onde pôde e trouxe R$ 4,2bi em investimentos para MS. Encaminhe para a ACE e o CDL. Gestor técnico — não político. Resultado real. 💼',
+    imagem: 'Ambiente corporativo/industrial de MS. Fábrica ou escritório com funcionários. Riedel visitando operação. Tom profissional, sóbrio. Dados de crescimento no fundo.',
+    video: 'CENA 1 (0–6s): Polo industrial de Campo Grande, máquinas em operação. VOZ: "O MS que o empresário precisava — finalmente." CENA 2 (6–18s): Riedel com executivos asssinando contratos. "Eduardo Riedel atraiu R$ 4,2 bi em investimentos e abriu 50 mil empregos formais." CENA 3 (18–27s): Funcionários, linhas de produção diversas. "Mais negócio. Mais emprego. Mais MS." CENA 4 (27–30s): "Riedel 2026."'
+  },
+  liberais: {
+    title: 'Liberais Sociais',
+    instagram: 'Sem palanque ideológico. Sem extremo. Eduardo Riedel governa com dados, equilíbrio fiscal e entregas verificáveis. É a gestão que o centro sempre pediu — sem barulho, com resultado. 📊 #RiedelMS #GestãoTécnica',
+    whatsapp: 'Cansado de guerra política? Riedel governa sem barulho — só com resultado. Nota fiscal, dado, entrega. É isso que o centro de MS precisa. Compartilhe com quem pensa igual. 📊',
+    imagem: 'Riedel em sala de reunião com equipe técnica. Gráficos e dados visíveis na tela. Tom sóbrio, profissional. Contraste deliberado com a estética de palanque e guerra política.',
+    video: 'CENA 1 (0–6s): Gráficos de crescimento econômico de MS. VOZ: "Enquanto o Brasil debatia — MS crescia." CENA 2 (6–18s): Riedel em ambiente técnico, analisando dados. "Eduardo Riedel governa com dados, não com discurso." CENA 3 (18–27s): Obras, índices, resultados verificáveis. "Equilíbrio fiscal. Entregas reais. Zero barulho." CENA 4 (27–30s): "Riedel 2026. Gestão que funciona."'
+  },
+  empreend: {
+    title: 'Empreendedores Individuais',
+    instagram: 'O empreendedor de MS tem nome. E Riedel sabe disso. Menos burocracia, mais oportunidade para quem batalha com as próprias mãos. Riedel entende o MEI, o autônomo, o dono do próprio destino. 💡 #EmpreendedorMS #MEI',
+    whatsapp: 'MEI, autônomo, entregador — Riedel criou ambiente pra você crescer. Desburocratização real. Microcrédito acessível. Oportunidade de verdade. Repasse pro grupo! 💡',
+    imagem: 'Empreendedor jovem em ambiente de trabalho próprio — ateliê, van de delivery, barbearia. Expressão de confiança e autonomia. Visual urbano, real. Zero estética de campanha tradicional.',
+    video: 'CENA 1 (0–8s): Jovem empreendedor iniciando o dia, preparando o negócio. VOZ: "No MS de Riedel, empreender ficou mais fácil." CENA 2 (8–18s): Riedel em feirão do empreendedorismo. "Microcrédito, desburocratização e respeito para quem corre com as próprias mãos." CENA 3 (18–27s): Vários empreendedores, diversidade de negócios. "Você não precisa de privilégio — precisa de espaço." CENA 4 (27–30s): "Riedel 2026."'
+  },
+  progressistas: {
+    title: 'Progressistas',
+    instagram: 'Riedel expandiu a rede pública de saúde, levou educação ao interior e reduziu a desigualdade regional em MS. Os dados do IBGE e do TSE provam. Gestão técnica não tem ideologia — tem resultado. #MSParaTodos',
+    whatsapp: 'Antes de julgar, veja o dado: Riedel expandiu a rede pública de saúde e criou programas habitacionais no interior. Gestão técnica não tem ideologia — tem resultado. 📊',
+    imagem: 'Escola pública nova em município carente do interior de MS. Crianças uniformizadas entrando. Riedel ao fundo, chegando para visita. Tom esperançoso, sem apelo político explícito.',
+    video: 'CENA 1 (0–8s): Escola pública nova no interior de MS. VOZ: "Em MS, a educação pública avançou onde mais precisava." CENA 2 (8–18s): Crianças estudando, professores. "Eduardo Riedel priorizou o interior, não só a capital." CENA 3 (18–27s): Dados de redução de desigualdade regional. "Porque gestão séria beneficia quem mais precisa." CENA 4 (27–30s): "Riedel 2026."'
+  },
+  militantes: {
+    title: 'Militantes de Esquerda',
+    instagram: 'O importante é o resultado para o trabalhador de MS. Dados de emprego, saúde e educação dos últimos 4 anos falam por si. Gestão é gestão — independente de partido. #MSTrabalho #ResultadoReal',
+    whatsapp: 'Dados não mentem: MS gerou 50 mil empregos formais em 2023. Saúde pública expandida. Desburocratização do microcrédito. Resultados para o trabalhador — independente de quem governa. 📊',
+    imagem: 'Trabalhadores em linha de produção ou serviço público. Diversidade real. Riedel discreto ao fundo. Foco nos trabalhadores, não no governador. Tom documental, honesto.',
+    video: 'CENA 1 (0–8s): Trabalhadores de MS em diferentes setores. VOZ: "O trabalhador de MS merece resultado — não guerra política." CENA 2 (8–20s): Dados de emprego, saúde e educação. "MS gerou 50 mil empregos formais. Saúde expandida. Microcrédito acessível." CENA 3 (20–27s): Cotidiano de trabalhadores. "Gestão é gestão. O resultado fica." CENA 4 (27–30s): "Riedel 2026."'
+  },
+  extdir: {
+    title: 'Extrema Direita',
+    instagram: 'MS cresceu com ordem, disciplina e respeito. Eduardo Riedel governa com firmeza, equilíbrio e resultado verificável. O estado que funciona começa com liderança séria. #MSComOrdem #RiedelMS',
+    whatsapp: 'MS precisa de gestão forte e séria. Riedel entrega — os números não mentem. 72% de aprovação. R$ 4,2bi em investimentos. 61 de 79 municípios com crescimento. Repasse. 💪',
+    imagem: 'Riedel em postura firme, olhando direto para a câmera. Fundo de MS — bandeira do estado, ou paisagem do Pantanal. Tom sóbrio, sem exagero. Autoridade natural.',
+    video: 'CENA 1 (0–8s): Imagens de ordem e trabalho em MS — obras, produção, segurança. VOZ: "MS precisa de gestão com firmeza e resultado." CENA 2 (8–20s): Riedel em ação de governo. "Eduardo Riedel entrega — sem palanque, sem barulho." CENA 3 (20–27s): Números: aprovação, investimentos, empregos. "Os números não mentem." CENA 4 (27–30s): "Riedel 2026."'
+  }
+};
+
+// ── NAVIGATION ──
+function doLogin() {
+  document.getElementById('login').classList.add('hidden');
+  setTimeout(() => document.getElementById('candidates').classList.remove('hidden'), 300);
+}
+
+let selected = null;
+function selectCandidate(card) {
+  document.querySelectorAll('.cand-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selected = card.id;
+  const btn = document.getElementById('btn-start');
+  btn.classList.add('visible');
+  if (card.id !== 'card-riedel') {
+    btn.textContent = 'Apenas Riedel disponível nesta demo →';
+    btn.onclick = () => { card.classList.remove('selected'); document.getElementById('card-riedel').classList.add('selected'); selected = 'card-riedel'; };
+  } else {
+    btn.textContent = 'Iniciar Análise Estratégica →';
+    btn.onclick = startApp;
+  }
+}
+
+function startApp() {
+  document.getElementById('candidates').classList.add('hidden');
+  const app = document.getElementById('app');
+  app.classList.add('visible');
+}
+
+function showSection(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const labels = {dossie:'Dossiê do Candidato',confronto:'Confronto com Adversários',monitoring:'Monitoramento',alertas:'Alertas & Tendências',conteudo:'Máquina de Conteúdo'};
+  document.getElementById('tb-breadcrumb').innerHTML = '→ <b>' + (labels[id] || '') + '</b>';
+  document.getElementById('content').scrollTop = 0;
+}
+
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function selectBolha(btn, key) {
+  document.querySelectorAll('.bolha-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const d = bolhaContent[key];
+  document.getElementById('content-bolha-title').textContent = 'Conteúdo para: ' + d.title;
+  document.getElementById('ct-instagram').textContent = d.instagram;
+  document.getElementById('ct-whatsapp').textContent = d.whatsapp;
+  document.getElementById('ct-imagem').textContent = d.imagem;
+  document.getElementById('ct-video').textContent = d.video;
+}
+
+function simulateGenerate(btn) {
+  const orig = btn.textContent;
+  btn.textContent = 'Gerando...';
+  btn.classList.add('generating');
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.textContent = '✓ Pronto!';
+    btn.classList.remove('generating');
+    btn.style.background = 'var(--green)';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 2000);
+  }, 1800);
+}
+
+function showCity(name, pct, desc) {
+  // handled via title attribute on SVG — browser native tooltip
+}
+
+// Auto-select Riedel on load
+window.onload = () => document.getElementById('card-riedel').click();
+</script>
+</body>
+</html>
