@@ -381,6 +381,86 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);colo
 .prod-status{margin-top:10px;padding:10px 14px;background:rgba(22,163,74,.06);border:1px solid rgba(22,163,74,.2);border-radius:8px;font-size:11px;color:#15803d;line-height:1.5}
 @keyframes spin{to{transform:rotate(360deg)}}
 
+/* ── MUNICÍPIOS ── */
+.mun-selector{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap}
+.mun-card{flex:1;min-width:140px;background:#fff;border:2px solid var(--cream2);border-radius:16px;padding:16px;cursor:pointer;transition:.2s;box-shadow:var(--s)}
+.mun-card:hover{border-color:#cbd5e1;transform:translateY(-2px)}
+.mun-card.active{border-color:var(--riedel);background:rgba(29,95,168,.04);box-shadow:0 0 0 3px rgba(29,95,168,.12),var(--sr)}
+.mun-card-name{font-size:13px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.mun-card-pop{font-size:11px;color:var(--muted)}
+.mun-card-inv{font-size:13px;font-weight:700;color:var(--riedel);margin-top:8px}
+.mun-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.mun-kpi{background:#fff;border-radius:16px;padding:20px;box-shadow:var(--s);position:relative;overflow:hidden}
+.mun-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.mun-kpi.total::before{background:var(--riedel)}
+.mun-kpi.saude::before{background:var(--green)}
+.mun-kpi.educ::before{background:#7c3aed}
+.mun-kpi.infra::before{background:var(--yellow)}
+.mun-kpi-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.mun-kpi-val{font-size:26px;font-weight:900;color:var(--ink);line-height:1}
+.mun-kpi-sub{font-size:11px;color:var(--muted);margin-top:4px}
+.mun-body{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:20px}
+.mun-panel{background:#fff;border-radius:16px;padding:20px;box-shadow:var(--s)}
+.mun-panel-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--cream2)}
+.mun-stat-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--cream2)}
+.mun-stat-row:last-child{border-bottom:none}
+.mun-stat-label{font-size:11px;color:var(--muted)}
+.mun-stat-val{font-size:13px;font-weight:700;color:var(--ink)}
+.mun-proj{display:flex;flex-direction:column;gap:10px}
+.mun-proj-item{padding:12px;border-radius:10px;background:var(--cream);border-left:3px solid}
+.mun-proj-item.concluido{border-color:var(--green)}
+.mun-proj-item.execucao{border-color:var(--yellow)}
+.mun-proj-item.previsto{border-color:#94a3b8}
+.mun-proj-name{font-size:12px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.mun-proj-val{font-size:11px;color:var(--muted)}
+.mun-proj-status{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
+.mun-proj-item.concluido .mun-proj-status{color:var(--green)}
+.mun-proj-item.execucao .mun-proj-status{color:#92400e}
+.mun-proj-item.previsto .mun-proj-status{color:#64748b}
+.mun-insight{background:linear-gradient(135deg,rgba(29,95,168,.08),rgba(37,99,235,.04));border:1px solid rgba(29,95,168,.15);border-radius:14px;padding:18px 20px;margin-top:20px;display:flex;gap:14px;align-items:flex-start}
+.mun-insight-icon{font-size:22px;flex-shrink:0}
+.mun-insight-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--riedel);margin-bottom:6px}
+.mun-insight-text{font-size:13px;color:var(--ink);line-height:1.6}
+/* ── GURU ── */
+.guru-layout{display:grid;grid-template-columns:220px 1fr;gap:20px;height:calc(100vh - 200px)}
+.guru-ctx{background:var(--navy);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:10px;overflow-y:auto}
+.guru-ctx-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:4px}
+.guru-ctx-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:rgba(255,255,255,.06);border-radius:10px}
+.guru-ctx-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;margin-top:3px}
+.guru-ctx-label{font-size:11px;color:rgba(255,255,255,.8);font-weight:600}
+.guru-ctx-sub{font-size:9px;color:rgba(255,255,255,.35);margin-top:2px}
+.guru-main{display:flex;flex-direction:column;background:#fff;border-radius:18px;overflow:hidden;box-shadow:var(--s)}
+.guru-header{padding:16px 22px;border-bottom:1px solid var(--cream2);display:flex;align-items:center;gap:14px}
+.guru-avatar{width:42px;height:42px;background:linear-gradient(135deg,#1d5fa8,#2563eb);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.guru-header-info h3{font-size:15px;font-weight:800;color:var(--ink)}
+.guru-header-info p{font-size:11px;color:var(--muted)}
+.guru-status{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--green);font-weight:600}
+.guru-status-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:blink 2s infinite}
+.guru-pills{display:flex;gap:8px;padding:12px 22px;border-bottom:1px solid var(--cream2);flex-wrap:wrap}
+.guru-pill{padding:8px 14px;background:var(--cream);border:1px solid var(--cream2);border-radius:999px;font-size:12px;font-weight:600;color:var(--ink);cursor:pointer;transition:.2s;font-family:inherit}
+.guru-pill:hover{border-color:var(--riedel);color:var(--riedel);background:rgba(29,95,168,.06)}
+.guru-messages{flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:14px;background:var(--cream)}
+.guru-msg{display:flex;gap:10px}
+.guru-msg.user{align-self:flex-end;flex-direction:row-reverse;max-width:80%}
+.guru-msg.assistant{max-width:88%}
+.guru-msg-bubble{padding:12px 16px;border-radius:16px;font-size:13px;line-height:1.6;color:var(--ink)}
+.guru-msg.assistant .guru-msg-bubble{background:#fff;border-radius:4px 16px 16px 16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.guru-msg.user .guru-msg-bubble{background:var(--riedel);color:#fff;border-radius:16px 4px 16px 16px}
+.guru-msg-avatar{width:32px;height:32px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;align-self:flex-end}
+.guru-msg.assistant .guru-msg-avatar{background:linear-gradient(135deg,#1d5fa8,#2563eb)}
+.guru-msg.user .guru-msg-avatar{background:rgba(29,95,168,.15)}
+.guru-msg-time{font-size:9px;color:var(--muted);margin-top:4px;padding:0 4px}
+.guru-input-area{padding:14px 22px;background:#fff;border-top:1px solid var(--cream2);display:flex;gap:10px;align-items:flex-end}
+.guru-input{flex:1;padding:11px 14px;border:1.5px solid var(--cream2);border-radius:12px;font-size:13px;font-family:inherit;color:var(--ink);outline:none;transition:.2s;resize:none;background:var(--cream);line-height:1.5}
+.guru-input:focus{border-color:rgba(29,95,168,.5);background:#fff}
+.guru-send{width:42px;height:42px;background:var(--riedel);border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.2s;flex-shrink:0;color:#fff}
+.guru-send:hover{background:#1a4f94;transform:translateY(-1px)}
+.guru-typing{display:flex;align-items:center;gap:5px;padding:12px 14px;background:#fff;border-radius:4px 14px 14px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06);width:fit-content}
+.guru-typing span{width:6px;height:6px;background:var(--muted);border-radius:50%;animation:typingDot 1.2s infinite}
+.guru-typing span:nth-child(2){animation-delay:.2s}
+.guru-typing span:nth-child(3){animation-delay:.4s}
+@keyframes typingDot{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)}}
+
 /* ── PAINEL ELEITORAL ── */
 .painel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
 .painel-kpi{background:#fff;border-radius:16px;padding:20px;box-shadow:var(--s);text-align:center;position:relative;overflow:hidden}
@@ -615,6 +695,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);colo
     <div class="sb-section">Análise</div>
     <button class="sb-item active" onclick="showSection('dossie',this)"><span class="sb-icon">👤</span>Dossiê do Candidato</button>
     <button class="sb-item" onclick="showSection('eleitoral',this)"><span class="sb-icon">📊</span>Painel Eleitoral</button>
+    <button class="sb-item" onclick="showSection('municipios',this)"><span class="sb-icon">🗺️</span>Municípios MS</button>
     <button class="sb-item" onclick="showSection('confronto',this)"><span class="sb-icon">⚔️</span>Confronto Adversários</button>
     <button class="sb-item" onclick="showSection('coerencia',this)"><span class="sb-icon">⚖️</span>Coerência Discurso</button>
     <div class="sb-section">Inteligência</div>
@@ -623,6 +704,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);colo
     <div class="sb-section">Operacional</div>
     <button class="sb-item" onclick="showSection('conteudo',this)"><span class="sb-icon">⚡</span>Máquina de Conteúdo</button>
     <button class="sb-item" onclick="showSection('studio',this)"><span class="sb-icon">🎨</span>Estúdio de Produção</button>
+    <button class="sb-item" onclick="showSection('guru',this)"><span class="sb-icon">🧠</span>Guru Estratégico</button>
     <div class="sb-footer">
       <div class="sb-footer-label">APIs Ativas</div>
       <div class="api-chip"><div class="api-dot"></div>Anthropic Claude<span>ONLINE</span></div>
@@ -1750,6 +1832,88 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);colo
         </div><!-- /studio-layout -->
       </div><!-- /sec-studio -->
 
+      <!-- ════ MUNICÍPIOS MS ════ -->
+      <div class="sec" id="sec-municipios">
+        <div class="sec-title">Municípios MS — Painel de Investimentos</div>
+        <div class="sec-sub">Dados oficiais do Governo do Estado por município · Fonte: Secretaria de Estado · Maio 2026</div>
+        <div class="mun-selector">
+          <div class="mun-card active" onclick="selectMunicipio('dourados',this)">
+            <div class="mun-card-name">Dourados</div>
+            <div class="mun-card-pop">264.017 hab.</div>
+            <div class="mun-card-inv">R$ 1,69B</div>
+          </div>
+          <div class="mun-card" onclick="selectMunicipio('corumba',this)">
+            <div class="mun-card-name">Corumbá</div>
+            <div class="mun-card-pop">98.751 hab.</div>
+            <div class="mun-card-inv">R$ 856,7M</div>
+          </div>
+          <div class="mun-card" onclick="selectMunicipio('jardim',this)">
+            <div class="mun-card-name">Jardim</div>
+            <div class="mun-card-pop">24.504 hab.</div>
+            <div class="mun-card-inv">R$ 230,9M</div>
+          </div>
+          <div class="mun-card" onclick="selectMunicipio('saogabriel',this)">
+            <div class="mun-card-name">São Gabriel do Oeste</div>
+            <div class="mun-card-pop">32.207 hab.</div>
+            <div class="mun-card-inv">R$ 92M</div>
+          </div>
+          <div class="mun-card" onclick="selectMunicipio('bodoquena',this)">
+            <div class="mun-card-name">Bodoquena</div>
+            <div class="mun-card-pop">8.887 hab.</div>
+            <div class="mun-card-inv">R$ 40,6M</div>
+          </div>
+        </div>
+        <div class="mun-kpis" id="mun-kpis"></div>
+        <div class="mun-body" id="mun-body"></div>
+        <div id="mun-insight"></div>
+      </div><!-- /sec-municipios -->
+
+      <!-- ════ GURU ESTRATÉGICO ════ -->
+      <div class="sec" id="sec-guru">
+        <div class="sec-title">Guru Estratégico</div>
+        <div class="sec-sub">Consultor de campanha com inteligência artificial · Contexto carregado: Eduardo Riedel · MS 2026</div>
+        <div class="guru-layout">
+          <div class="guru-ctx">
+            <div class="guru-ctx-title">Contexto Carregado</div>
+            <div class="guru-ctx-item"><div class="guru-ctx-dot"></div><div><div class="guru-ctx-label">Candidato</div><div class="guru-ctx-sub">Eduardo Riedel · PP · Gov. MS</div></div></div>
+            <div class="guru-ctx-item"><div class="guru-ctx-dot"></div><div><div class="guru-ctx-label">9 Bolhas Eleitorais</div><div class="guru-ctx-sub">Mapeadas e indexadas</div></div></div>
+            <div class="guru-ctx-item"><div class="guru-ctx-dot"></div><div><div class="guru-ctx-label">Municípios MS</div><div class="guru-ctx-sub">5 cidades · dados mai/2026</div></div></div>
+            <div class="guru-ctx-item"><div class="guru-ctx-dot"></div><div><div class="guru-ctx-label">Adversários</div><div class="guru-ctx-sub">Trad · Catan · dossiês completos</div></div></div>
+            <div class="guru-ctx-item"><div class="guru-ctx-dot"></div><div><div class="guru-ctx-label">Método IE</div><div class="guru-ctx-sub">8 fases · Inteligência Eleitoral</div></div></div>
+            <div class="guru-ctx-item"><div class="guru-ctx-dot"></div><div><div class="guru-ctx-label">Monitoramento</div><div class="guru-ctx-sub">WhatsApp · X · Notícias</div></div></div>
+          </div>
+          <div class="guru-main">
+            <div class="guru-header">
+              <div class="guru-avatar">🧠</div>
+              <div class="guru-header-info">
+                <h3>Guru Estratégico</h3>
+                <p>Consultor de campanha · Inteligência Eleitoral MS 2026</p>
+              </div>
+              <div class="guru-status"><div class="guru-status-dot"></div>ATIVO</div>
+            </div>
+            <div class="guru-pills">
+              <button class="guru-pill" onclick="guruPill('roteiro')">📋 Roteiro de debate</button>
+              <button class="guru-pill" onclick="guruPill('risco')">⚠️ Risco por município</button>
+              <button class="guru-pill" onclick="guruPill('oportunidade')">🎯 Oportunidade eleitoral</button>
+              <button class="guru-pill" onclick="guruPill('bolha')">🔵 Estratégia por bolha</button>
+            </div>
+            <div class="guru-messages" id="guru-messages">
+              <div class="guru-msg assistant">
+                <div class="guru-msg-avatar">🧠</div>
+                <div>
+                  <div class="guru-msg-bubble">Contexto carregado. Tenho acesso ao dossiê completo de Eduardo Riedel, mapeamento dos 9 segmentos eleitorais, dados de investimento de 5 municípios e monitoramento ativo de adversários.<br><br>Use os atalhos acima ou faça qualquer pergunta estratégica sobre a campanha.</div>
+                  <div class="guru-msg-time">Pronto para consulta</div>
+                </div>
+              </div>
+            </div>
+            <div class="guru-input-area">
+              <textarea class="guru-input" id="guru-input" rows="1" placeholder="Faça uma pergunta estratégica..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();guruSend()}"></textarea>
+              <button class="guru-send" onclick="guruSend()">➤</button>
+            </div>
+          </div>
+        </div>
+      </div><!-- /sec-guru -->
+
     </div><!-- /content -->
   </div><!-- /main -->
 </div><!-- /app -->
@@ -1855,7 +2019,7 @@ function showSection(id, btn) {
   document.getElementById('sec-' + id).classList.add('active');
   document.querySelectorAll('.sb-item').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
-  const labels = {dossie:'Dossiê do Candidato',eleitoral:'Painel Eleitoral',confronto:'Confronto com Adversários',coerencia:'Coerência Discurso',monitoring:'Monitoramento',alertas:'Alertas & Tendências',conteudo:'Máquina de Conteúdo',studio:'Estúdio de Produção'};
+  const labels = {dossie:'Dossiê do Candidato',eleitoral:'Painel Eleitoral',municipios:'Municípios MS',confronto:'Confronto com Adversários',coerencia:'Coerência Discurso',monitoring:'Monitoramento',alertas:'Alertas & Tendências',conteudo:'Máquina de Conteúdo',studio:'Estúdio de Produção',guru:'Guru Estratégico'};
   document.getElementById('tb-breadcrumb').innerHTML = '→ <b>' + (labels[id] || '') + '</b>';
   document.getElementById('content').scrollTop = 0;
 }
@@ -2580,10 +2744,183 @@ function ativarContrasteAdversario(key) {
 // Tecla ESC fecha modal
 document.addEventListener('keydown', e => { if (e.key === 'Escape') fecharModalAdversario(); });
 
+// ── MUNICÍPIOS DATA ──
+const municipioData = {
+  dourados: {
+    nome:'Dourados', pop:'264.017', pib:'R$55.246', idhm:'0,74', firjan:'0,77',
+    total:'R$1,69B', saude:'R$78,4M', educ:'R$53,2M', infra:'R$1,56B',
+    saudeN:78.4, educN:53.2, infraN:1560,
+    projetos:[
+      {nome:'Hospital Regional Olga C. Parizotto',val:'R$35,7M',status:'execucao',label:'Em execução · 99,44%'},
+      {nome:'E.E. Castro Alves — Reforma geral',val:'R$7,2M',status:'concluido',label:'Concluída set/2023'},
+      {nome:'E.E. Ramona da Silva Pedroso',val:'R$7,8M',status:'execucao',label:'97,45% executado'}
+    ],
+    insight:'Dourados é a vitrine do governo Riedel no interior. R$1,69 bilhão em investimentos verificáveis para 264 mil habitantes. O Hospital Regional em construção (99,44%) é o projeto símbolo — entrega iminente com alto impacto eleitoral. Ponto de atenção: 7.683 analfabetos ainda presentes — vulnerabilidade que adversários podem explorar.'
+  },
+  corumba: {
+    nome:'Corumbá', pop:'98.751', pib:'R$34.684', idhm:'0,74', firjan:'0,65',
+    total:'R$856,7M', saude:'R$16,3M', educ:'R$36,9M', infra:'R$803,4M',
+    saudeN:16.3, educN:36.9, infraN:803.4,
+    projetos:[
+      {nome:'Maternidade Novo PAC 2024',val:'R$60M',status:'previsto',label:'Licitação em andamento'},
+      {nome:'Revitalização Porto de Corumbá',val:'R$28,7M',status:'previsto',label:'Prevista'},
+      {nome:'E.E. Júlia Gonçalves Passarinho',val:'R$11,6M',status:'concluido',label:'Concluída abr/2025'}
+    ],
+    insight:'Corumbá é o portal estratégico do Pantanal. 94% dos investimentos vão para infraestrutura — porto, aeródromo, rodovias. Narrativa de campanha: "abrindo o MS para o mundo". Ponto de atenção: Firjan 0,65 (menor da amostra) — vulnerabilidade econômica que adversários podem explorar.'
+  },
+  jardim: {
+    nome:'Jardim', pop:'24.504', pib:'R$31.335', idhm:'0,74', firjan:'0,67',
+    total:'R$230,9M', saude:'R$16M', educ:'R$17,8M', infra:'R$203,6M',
+    saudeN:16, educN:17.8, infraN:203.6,
+    projetos:[
+      {nome:'Hospital Marechal Rondon — UTI + Hemodiálise',val:'R$7,97M',status:'execucao',label:'Em execução · 47,22%'},
+      {nome:'E.E. Cel. Juvêncio — Reforma e ampliação',val:'R$9,9M',status:'concluido',label:'Concluída (100%)'},
+      {nome:'Recapeamento Rodovias MS-178',val:'R$19,6M',status:'execucao',label:'Em execução'}
+    ],
+    insight:'Jardim tem o menor PIB per capita da amostra (R$31k) — mas R$230M em obras provam presença do estado. Hospital ganhando UTI e hemodiálise é argumento eleitoral forte para população carente de saúde especializada. Aeródromo em expansão sinaliza visão de desenvolvimento regional.'
+  },
+  saogabriel: {
+    nome:'São Gabriel do Oeste', pop:'32.207', pib:'R$80.686', idhm:'0,74', firjan:'0,77',
+    total:'R$92M', saude:'—', educ:'R$15,7M', infra:'R$76,2M',
+    saudeN:0, educN:15.7, infraN:76.2,
+    projetos:[
+      {nome:'Aeródromo — Implantação de pavimento asfáltico',val:'R$20,5M',status:'previsto',label:'Previsto após outubro'},
+      {nome:'E.E. Profª Creuza Della Coleta',val:'R$4,6M',status:'concluido',label:'Concluída set/2024'},
+      {nome:'294 moradias — Bônus Moradia',val:'R$4,5M',status:'concluido',label:'Entregues'}
+    ],
+    insight:'Maior PIB per capita da amostra (R$80k) — município rico, agronegócio dominante (24,66% do PIB). Sem obras estaduais em saúde: gap que adversários podem explorar. Contraponto: 294 moradias entregues e aeródromo em expansão reforçam argumento de qualidade de vida para quem já tem renda.'
+  },
+  bodoquena: {
+    nome:'Bodoquena', pop:'8.887', pib:'R$45.112', idhm:'0,74', firjan:'0,59',
+    total:'R$40,6M', saude:'R$4,9M', educ:'R$8,2M', infra:'R$24,4M',
+    saudeN:4.9, educN:8.2, infraN:24.4,
+    projetos:[
+      {nome:'E.E. João Pedro Pedrossian — Reforma e ampliação',val:'R$8,2M',status:'concluido',label:'Concluída fev/2025'},
+      {nome:'Esgotamento Sanitário Sol Nascente',val:'R$643k',status:'concluido',label:'Concluída 2026'},
+      {nome:'58 lotes urbanizados — Projeto Lote Urbanizado',val:'R$1,45M',status:'previsto',label:'Assinatura na agenda'}
+    ],
+    insight:'Menor cidade da amostra mas modelo de saneamento: 92,5% de cobertura de esgoto — melhor da amostra. Narrativa de campanha: "nenhum município é pequeno demais para receber atenção do estado". 229 títulos de regularização fundiária entregues reforçam argumento de inclusão e dignidade.'
+  }
+};
+
+function selectMunicipio(key, card) {
+  document.querySelectorAll('.mun-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+  const d = municipioData[key];
+  const mx = Math.max(d.saudeN, d.educN, d.infraN) || 1;
+  document.getElementById('mun-kpis').innerHTML = `
+    <div class="mun-kpi total"><div class="mun-kpi-label">Investimento Total</div><div class="mun-kpi-val">${d.total}</div><div class="mun-kpi-sub">Saúde + Educação + Infraestrutura</div></div>
+    <div class="mun-kpi saude"><div class="mun-kpi-label">Saúde</div><div class="mun-kpi-val">${d.saude}</div><div class="mun-kpi-sub">Obras e investimentos</div></div>
+    <div class="mun-kpi educ"><div class="mun-kpi-label">Educação</div><div class="mun-kpi-val">${d.educ}</div><div class="mun-kpi-sub">Obras e investimentos</div></div>
+    <div class="mun-kpi infra"><div class="mun-kpi-label">Infraestrutura</div><div class="mun-kpi-val">${d.infra}</div><div class="mun-kpi-sub">Saneamento + Obras + Rodovias</div></div>
+  `;
+  const barHtml = (label, val, valN, color) => {
+    if (val === '—') return `<div style="padding:9px 0;border-bottom:1px solid var(--cream2)"><div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:4px">${label}</div><div style="font-size:11px;color:var(--muted);font-style:italic">Sem obras estaduais</div></div>`;
+    const pct = Math.max(6, Math.round((valN/mx)*100));
+    return `<div style="padding:9px 0;border-bottom:1px solid var(--cream2)"><div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;font-weight:600;color:var(--muted)">${label}</span><span style="font-size:12px;font-weight:700;color:var(--ink)">${val}</span></div><div style="height:6px;background:var(--cream2);border-radius:999px;overflow:hidden"><div style="height:100%;background:${color};border-radius:999px;width:${pct}%;transition:width .4s ease"></div></div></div>`;
+  };
+  document.getElementById('mun-body').innerHTML = `
+    <div class="mun-panel">
+      <div class="mun-panel-title">Panorama Geral</div>
+      <div class="mun-stat-row"><span class="mun-stat-label">População estimada</span><span class="mun-stat-val">${d.pop} hab.</span></div>
+      <div class="mun-stat-row"><span class="mun-stat-label">PIB per capita</span><span class="mun-stat-val">${d.pib}</span></div>
+      <div class="mun-stat-row"><span class="mun-stat-label">IDHM</span><span class="mun-stat-val">${d.idhm}</span></div>
+      <div class="mun-stat-row"><span class="mun-stat-label">Índice Firjan</span><span class="mun-stat-val">${d.firjan}</span></div>
+      <div class="mun-stat-row"><span class="mun-stat-label">Fonte</span><span class="mun-stat-val" style="font-size:10px">Sebrae/IBGE · Mai/2026</span></div>
+    </div>
+    <div class="mun-panel">
+      <div class="mun-panel-title">Projetos em Destaque</div>
+      <div class="mun-proj">${d.projetos.map(p=>`<div class="mun-proj-item ${p.status}"><div class="mun-proj-name">${p.nome}</div><div class="mun-proj-val">${p.val}</div><div class="mun-proj-status">${p.label}</div></div>`).join('')}</div>
+    </div>
+    <div class="mun-panel">
+      <div class="mun-panel-title">Distribuição de Investimentos</div>
+      ${barHtml('Saúde', d.saude, d.saudeN, '#16a34a')}
+      ${barHtml('Educação', d.educ, d.educN, '#7c3aed')}
+      ${barHtml('Infraestrutura', d.infra, d.infraN, '#ca8a04')}
+    </div>
+  `;
+  document.getElementById('mun-insight').innerHTML = `
+    <div class="mun-insight">
+      <div class="mun-insight-icon">🎯</div>
+      <div><div class="mun-insight-label">Inteligência Estratégica · ${d.nome}</div><div class="mun-insight-text">${d.insight}</div></div>
+    </div>
+  `;
+}
+
+// ── GURU DATA ──
+const guruRespostas = {
+  roteiro: {
+    q:'📋 Como montar um roteiro de debate para Riedel vs Trad?',
+    r:`<strong>Roteiro de Debate — Riedel vs. Trad</strong><br><br><strong>Abertura (tom gestor):</strong> "MS cresceu enquanto o Brasil debatia. Falo com dados."<br><br><strong>Ataque preemptivo:</strong> Trad é comunicador — não gestor. Cada vez que ele falar em intenção, você mostra entrega. Use a comparação: MS vs. estados PT no mesmo período.<br><br><strong>Escudo de municípios:</strong> Se questionado sobre o interior — cite Dourados (R$1,69B), Corumbá (porto + aeródromo), Jardim (UTI entregue). Números reais, obras verificáveis.<br><br><strong>Armadilha a evitar:</strong> Não entre em guerra ideológica. Trad vive disso. Seu diferencial é o tédio da competência — deixe ele ser o barulho, você seja o resultado.<br><br><strong>Encerramento:</strong> "MS 2026 precisa de quem já entregou — não de quem promete pela primeira vez."`
+  },
+  risco: {
+    q:'⚠️ Qual o principal risco eleitoral por município?',
+    r:`<strong>Análise de Risco — Municípios MS</strong><br><br><strong>🔴 Corumbá (ALTO):</strong> Firjan 0,65 — menor da amostra. Vulnerabilidade econômica real. Adversários podem explorar que grandes obras de infraestrutura não chegam ao bolso do trabalhador. Antídoto: humanizar com maternidade + escola.<br><br><strong>🟡 Jardim (MÉDIO):</strong> PIB per capita mais baixo (R$31k). Hospital Marechal Rondon com 47% executado — risco de "obra que não termina" se não entregar antes da eleição.<br><br><strong>🟡 São Gabriel do Oeste (MÉDIO):</strong> Zero obras em saúde estadual. Adversário pode perguntar: "por que o agro recebe estrada mas não recebe hospital?"<br><br><strong>🟢 Dourados (BAIXO):</strong> Vitrine do governo. Hospital quase pronto, escolas entregues. Risco residual: analfabetismo (7.683 pessoas).<br><br><strong>🟢 Bodoquena (BAIXO):</strong> Saneamento exemplar (92,5%). Baixo risco eleitoral.`
+  },
+  oportunidade: {
+    q:'🎯 Onde estão as maiores oportunidades eleitorais?',
+    r:`<strong>Mapa de Oportunidades — MS 2026</strong><br><br><strong>1. Dourados (máxima prioridade):</strong> 264k hab., obras na reta final. Hospital Regional quase pronto = inauguração antes do primeiro turno. Cobertura massiva, impacto emocional direto nas bolhas Conservadores e Agro.<br><br><strong>2. São Gabriel do Oeste — AGRO CONSOLIDADO:</strong> PIB per capita R$80k, Firjan 0,77. Base já vencida. Foco: manter com conteúdo de infraestrutura rural. Mensagem: "seguimos investindo em quem faz MS crescer."<br><br><strong>3. Jardim — INTERIOR SENSÍVEL:</strong> PIB baixo + hospital em expansão = eleitor emocional. Inauguração da UTI é evento eleitoral de primeira ordem — visita com cobertura regional.<br><br><strong>4. Corumbá — DISPUTA REAL:</strong> Base diversa. Porto + maternidade = argumento para converter progressistas sem perder o centro.`
+  },
+  bolha: {
+    q:'🔵 Como distribuir a estratégia por bolha eleitoral nos municípios?',
+    r:`<strong>Estratégia por Bolha — Municípios MS</strong><br><br><strong>Agro (SGO + Dourados):</strong> Infraestrutura rural, aeródromos, rodovias. Tom: "Riedel sabe que sem estrada, não tem colheita." Criativos com imagem de produtor + obra concluída.<br><br><strong>Conservadores Cristãos (Jardim + Dourados interior):</strong> Hospital, escola, família. Imagem: Riedel visitando obra em cidade pequena, comunidade ao redor. Zero palanque. Tom documental.<br><br><strong>Progressistas (Corumbá + interior carente):</strong> Maternidade, escola pública, regularização fundiária. Bodoquena tem 229 títulos entregues — caso real de inclusão. Vídeo com beneficiários.<br><br><strong>Centro moderado (todas as cidades):</strong> "Aqui está o que foi feito — confira." Dashboard de obras por cidade. Visual, verificável, sem tom político explícito. Transparência como diferencial.`
+  }
+};
+
+function guruPill(key) {
+  const r = guruRespostas[key];
+  addGuruMsg(r.q, 'user');
+  setTimeout(() => {
+    showGuruTyping();
+    setTimeout(() => { removeGuruTyping(); addGuruMsg(r.r, 'assistant'); }, 1800);
+  }, 300);
+}
+
+function guruSend() {
+  const inp = document.getElementById('guru-input');
+  const txt = inp.value.trim();
+  if (!txt) return;
+  inp.value = '';
+  inp.style.height = 'auto';
+  addGuruMsg(txt, 'user');
+  setTimeout(() => {
+    showGuruTyping();
+    setTimeout(() => {
+      removeGuruTyping();
+      addGuruMsg('Analisando o contexto de MS 2026 com base nos dados carregados...<br><br>Esta versão da demo responde via atalhos estratégicos pré-configurados acima. A versão integrada com IA responde qualquer consulta em tempo real — conectada ao dossiê completo, municípios e monitoramento ativo.', 'assistant');
+    }, 2000);
+  }, 300);
+}
+
+function addGuruMsg(text, role) {
+  const msgs = document.getElementById('guru-messages');
+  const d = document.createElement('div');
+  d.className = `guru-msg ${role}`;
+  const t = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  d.innerHTML = `<div class="guru-msg-avatar">${role==='assistant'?'🧠':'👤'}</div><div><div class="guru-msg-bubble">${text}</div><div class="guru-msg-time">${t}</div></div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showGuruTyping() {
+  const msgs = document.getElementById('guru-messages');
+  const d = document.createElement('div');
+  d.className = 'guru-msg assistant'; d.id = 'guru-typing';
+  d.innerHTML = `<div class="guru-msg-avatar">🧠</div><div class="guru-typing"><span></span><span></span><span></span></div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeGuruTyping() {
+  const el = document.getElementById('guru-typing');
+  if (el) el.remove();
+}
+
 // Auto-select Riedel on load
 window.onload = () => {
   document.getElementById('card-riedel').click();
   renderCoerencia('riedel');
+  selectMunicipio('dourados', document.querySelector('.mun-card'));
 };
 </script>
 </body>
