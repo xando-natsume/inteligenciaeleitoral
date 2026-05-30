@@ -786,59 +786,75 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--navy);colo
             <div class="map-sub">Intensidade eleitoral por município · Análise IE</div>
             <div class="map-container">
               <svg class="ms-map-svg" viewBox="0 0 420 300" xmlns="http://www.w3.org/2000/svg">
-                <!-- MS Shape -->
+                <!-- Radar chart — centro (210,148), maxR=80 representa 80% -->
                 <defs>
-                  <linearGradient id="mapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1"/>
-                    <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1"/>
+                  <linearGradient id="radarFill" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:rgba(29,95,168,.28)"/>
+                    <stop offset="100%" style="stop-color:rgba(16,90,172,.12)"/>
                   </linearGradient>
                 </defs>
-                <path d="M55,25 L370,18 L385,90 L380,170 L355,210 L320,260 L200,275 L100,265 L55,220 L35,130 Z"
-                      fill="url(#mapGrad)" stroke="#93c5fd" stroke-width="2"/>
-                <!-- Grid lines -->
-                <line x1="55" y1="25" x2="385" y2="18" stroke="rgba(255,255,255,.6)" stroke-width="1" stroke-dasharray="4,4"/>
-                <!-- Cities -->
-                <g class="city-dot" onclick="showCity('Campo Grande','68%','Base sólida · Capital · Centro político')">
-                  <circle cx="210" cy="155" r="22" fill="rgba(29,95,168,.85)" stroke="#fff" stroke-width="2"/>
-                  <text x="210" y="155" text-anchor="middle" dominant-baseline="central" font-size="9" font-weight="700" fill="#fff">68%</text>
-                  <text x="210" y="182" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Campo Grande</text>
-                </g>
-                <g class="city-dot" onclick="showCity('Dourados','71%','Agro forte · 2ª cidade do estado')">
-                  <circle cx="200" cy="220" r="16" fill="rgba(29,95,168,.8)" stroke="#fff" stroke-width="2"/>
-                  <text x="200" y="220" text-anchor="middle" dominant-baseline="central" font-size="9" font-weight="700" fill="#fff">71%</text>
-                  <text x="200" y="241" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Dourados</text>
-                </g>
-                <g class="city-dot" onclick="showCity('Três Lagoas','74%','Polo industrial · Maior crescimento')">
-                  <circle cx="352" cy="115" r="14" fill="rgba(16,90,172,.9)" stroke="#fff" stroke-width="2"/>
-                  <text x="352" y="115" text-anchor="middle" dominant-baseline="central" font-size="8" font-weight="700" fill="#fff">74%</text>
-                  <text x="352" y="134" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">3 Lagoas</text>
-                </g>
-                <g class="city-dot" onclick="showCity('Corumbá','58%','Fronteira · Disputado · Potencial')">
-                  <circle cx="68" cy="138" r="13" fill="rgba(59,130,246,.65)" stroke="#fff" stroke-width="2"/>
-                  <text x="68" y="138" text-anchor="middle" dominant-baseline="central" font-size="8" font-weight="700" fill="#fff">58%</text>
-                  <text x="68" y="157" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Corumbá</text>
-                </g>
-                <g class="city-dot" onclick="showCity('Ponta Porã','61%','Fronteira sul · Conservador cristão')">
-                  <circle cx="160" cy="245" r="11" fill="rgba(29,95,168,.72)" stroke="#fff" stroke-width="2"/>
-                  <text x="160" y="245" text-anchor="middle" dominant-baseline="central" font-size="8" font-weight="700" fill="#fff">61%</text>
-                  <text x="160" y="262" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Ponta Porã</text>
-                </g>
-                <g class="city-dot" onclick="showCity('Coxim','67%','Norte · Agronegócio crescente')">
-                  <circle cx="200" cy="72" r="12" fill="rgba(29,95,168,.75)" stroke="#fff" stroke-width="2"/>
-                  <text x="200" y="72" text-anchor="middle" dominant-baseline="central" font-size="8" font-weight="700" fill="#fff">67%</text>
-                  <text x="200" y="90" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Coxim</text>
-                </g>
-                <g class="city-dot" onclick="showCity('Nova Andradina','69%','Leste · Agro soja · Base forte')">
-                  <circle cx="315" cy="195" r="12" fill="rgba(29,95,168,.78)" stroke="#fff" stroke-width="2"/>
-                  <text x="315" y="195" text-anchor="middle" dominant-baseline="central" font-size="8" font-weight="700" fill="#fff">69%</text>
-                  <text x="315" y="213" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">N. Andradina</text>
-                </g>
-                <g class="city-dot" onclick="showCity('Aquidauana','64%','Pantanal · Rural · Agro')">
-                  <circle cx="118" cy="178" r="13" fill="rgba(59,130,246,.65)" stroke="#fff" stroke-width="2"/>
-                  <text x="118" y="178" text-anchor="middle" dominant-baseline="central" font-size="8" font-weight="700" fill="#fff">64%</text>
-                  <text x="118" y="197" text-anchor="middle" font-size="9" fill="var(--navy)" font-weight="600">Aquidauana</text>
-                </g>
-                <!-- Tooltip area -->
+                <!-- Anéis de grade: 40%, 60%, 80% -->
+                <circle cx="210" cy="148" r="80" fill="none" stroke="rgba(148,163,184,.22)" stroke-width="1"/>
+                <circle cx="210" cy="148" r="60" fill="none" stroke="rgba(148,163,184,.18)" stroke-width="1" stroke-dasharray="4,3"/>
+                <circle cx="210" cy="148" r="40" fill="none" stroke="rgba(148,163,184,.13)" stroke-width="1" stroke-dasharray="4,3"/>
+                <!-- Rótulos de grade (anel externo) -->
+                <text x="214" y="71" font-size="7" fill="rgba(100,116,139,.5)">80%</text>
+                <text x="214" y="91" font-size="7" fill="rgba(100,116,139,.5)">60%</text>
+                <!-- Eixos (8 spokes) — sentido horário a partir do topo -->
+                <line x1="210" y1="148" x2="210" y2="68"  stroke="rgba(148,163,184,.25)" stroke-width="1"/>
+                <line x1="210" y1="148" x2="267" y2="91"  stroke="rgba(148,163,184,.25)" stroke-width="1"/>
+                <line x1="210" y1="148" x2="290" y2="148" stroke="rgba(148,163,184,.25)" stroke-width="1"/>
+                <line x1="210" y1="148" x2="267" y2="205" stroke="rgba(148,163,184,.25)" stroke-width="1"/>
+                <line x1="210" y1="148" x2="210" y2="228" stroke="rgba(148,163,184,.25)" stroke-width="1"/>
+                <line x1="210" y1="148" x2="153" y2="205" stroke="rgba(148,163,184,.25)" stroke-width="1"/>
+                <line x1="210" y1="148" x2="130" y2="148" stroke="rgba(148,163,184,.25)" stroke-width="1"/>
+                <line x1="210" y1="148" x2="153" y2="91"  stroke="rgba(148,163,184,.25)" stroke-width="1"/>
+                <!-- Polígono de dados — pontos = pct como raio direto em pixels -->
+                <!-- CG 68→(210,80) · Coxim 67→(257,101) · TL 74→(284,148) · NA 69→(259,197) -->
+                <!-- Dds 71→(210,219) · PP 61→(167,191) · Cor 58→(152,148) · Aqd 64→(165,103) -->
+                <polygon points="210,80 257,101 284,148 259,197 210,219 167,191 152,148 165,103"
+                         fill="url(#radarFill)" stroke="rgba(29,95,168,.75)" stroke-width="2" stroke-linejoin="round"/>
+                <!-- Campo Grande 68% — topo -->
+                <circle class="city-dot" cx="210" cy="80" r="5" fill="rgba(29,95,168,.9)" stroke="#fff" stroke-width="1.5"
+                        onclick="showCity('Campo Grande','68%','Base sólida · Capital · Centro político')"/>
+                <text x="210" y="49" text-anchor="middle" font-size="9" font-weight="700" fill="var(--navy)">Campo Grande</text>
+                <text x="210" y="61" text-anchor="middle" font-size="8" fill="var(--muted)">68%</text>
+                <!-- Coxim 67% — topo-direita -->
+                <circle class="city-dot" cx="257" cy="101" r="5" fill="rgba(29,95,168,.85)" stroke="#fff" stroke-width="1.5"
+                        onclick="showCity('Coxim','67%','Norte · Agronegócio crescente')"/>
+                <text x="279" y="76" text-anchor="start" font-size="9" font-weight="700" fill="var(--navy)">Coxim</text>
+                <text x="279" y="87" text-anchor="start" font-size="8" fill="var(--muted)">67%</text>
+                <!-- Três Lagoas 74% — direita -->
+                <circle class="city-dot" cx="284" cy="148" r="6" fill="rgba(16,90,172,.9)" stroke="#fff" stroke-width="1.5"
+                        onclick="showCity('Três Lagoas','74%','Polo industrial · Maior crescimento')"/>
+                <text x="298" y="144" text-anchor="start" font-size="9" font-weight="700" fill="var(--navy)">3 Lagoas</text>
+                <text x="298" y="155" text-anchor="start" font-size="8" fill="var(--muted)">74%</text>
+                <!-- Nova Andradina 69% — baixo-direita -->
+                <circle class="city-dot" cx="259" cy="197" r="5" fill="rgba(29,95,168,.85)" stroke="#fff" stroke-width="1.5"
+                        onclick="showCity('Nova Andradina','69%','Leste · Agro soja · Base forte')"/>
+                <text x="279" y="216" text-anchor="start" font-size="9" font-weight="700" fill="var(--navy)">N. Andradina</text>
+                <text x="279" y="227" text-anchor="start" font-size="8" fill="var(--muted)">69%</text>
+                <!-- Dourados 71% — base -->
+                <circle class="city-dot" cx="210" cy="219" r="5" fill="rgba(29,95,168,.85)" stroke="#fff" stroke-width="1.5"
+                        onclick="showCity('Dourados','71%','Agro forte · 2ª cidade do estado')"/>
+                <text x="210" y="246" text-anchor="middle" font-size="9" font-weight="700" fill="var(--navy)">Dourados</text>
+                <text x="210" y="257" text-anchor="middle" font-size="8" fill="var(--muted)">71%</text>
+                <!-- Ponta Porã 61% — baixo-esquerda -->
+                <circle class="city-dot" cx="167" cy="191" r="4" fill="rgba(29,95,168,.72)" stroke="#fff" stroke-width="1.5"
+                        onclick="showCity('Ponta Porã','61%','Fronteira sul · Conservador cristão')"/>
+                <text x="141" y="216" text-anchor="end" font-size="9" font-weight="700" fill="var(--navy)">Ponta Porã</text>
+                <text x="141" y="227" text-anchor="end" font-size="8" fill="var(--muted)">61%</text>
+                <!-- Corumbá 58% — esquerda -->
+                <circle class="city-dot" cx="152" cy="148" r="4" fill="rgba(59,130,246,.65)" stroke="#fff" stroke-width="1.5"
+                        onclick="showCity('Corumbá','58%','Fronteira · Disputado · Potencial')"/>
+                <text x="122" y="144" text-anchor="end" font-size="9" font-weight="700" fill="var(--navy)">Corumbá</text>
+                <text x="122" y="155" text-anchor="end" font-size="8" fill="var(--muted)">58%</text>
+                <!-- Aquidauana 64% — topo-esquerda -->
+                <circle class="city-dot" cx="165" cy="103" r="5" fill="rgba(59,130,246,.7)" stroke="#fff" stroke-width="1.5"
+                        onclick="showCity('Aquidauana','64%','Pantanal · Rural · Agro')"/>
+                <text x="141" y="76" text-anchor="end" font-size="9" font-weight="700" fill="var(--navy)">Aquidauana</text>
+                <text x="141" y="87" text-anchor="end" font-size="8" fill="var(--muted)">64%</text>
+                <!-- Tooltip -->
                 <rect id="map-tooltip-bg" x="0" y="0" width="0" height="0" rx="6" fill="rgba(10,22,40,.9)" display="none"/>
                 <text id="map-tooltip-city" x="0" y="0" font-size="10" font-weight="700" fill="#fff" display="none"/>
                 <text id="map-tooltip-pct" x="0" y="0" font-size="9" fill="rgba(255,255,255,.7)" display="none"/>
